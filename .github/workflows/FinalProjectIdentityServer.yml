@@ -1,0 +1,71 @@
+name: FinalProjectIdentityServer Build and deploy to Linux WebApp 
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - .github/workflows/FinalProjectIdentityServer.yml
+    - src/IdentityServer/**
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+    - closed
+    branches:
+    - main
+    paths:
+    - .github/workflows/FinalProjectIdentityServer.yml
+    - src/IdentityServer/**
+  workflow_dispatch:   
+ 
+env:
+  AZURE_WEBAPP_NAME: FinalProjectIdentityServer
+  AZURE_WEBAPP_PACKAGE_PATH: src/IdentityServer/publish  
+  AZURE_WEBAPP_PUBLISH_PROFILE: secrets.IdentityServer_Development
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+  WORKING_DIRECTORY: src/IdentityServer
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Upload Publish Artifacts
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v2
+      with:
+        name: IdentityServer
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+  deploy_development:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+    - name: Download Publish Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: IdentityServer
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}        
+    - name: Deploy to Azure WebApp
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: .
+        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }} 
