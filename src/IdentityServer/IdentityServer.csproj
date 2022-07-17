@@ -5,7 +5,14 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNameSpace>FinalProject.IdentityServer</RootNameSpace>
+		<ResolveStaticWebAssetsInputsDependsOn>RemoveIdentityAssets</ResolveStaticWebAssetsInputsDependsOn>
 	</PropertyGroup>
+
+	<Target Name="RemoveIdentityAssets">
+		<ItemGroup>
+			<StaticWebAsset Remove="@(StaticWebAsset)" Condition="%(SourceId) == 'Microsoft.AspNetCore.Identity.UI'" />
+		</ItemGroup>
+	</Target>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
@@ -19,6 +26,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Infrastructure.Sqlite\Infrastructure.Sqlite.csproj" />
 		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-	</ItemGroup>
+	</ItemGroup>	
 
 </Project>
