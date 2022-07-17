@@ -3,6 +3,13 @@
     "sqlite1": {
       "type": "sqlite",
       "connectionId": "ConnectionStrings:SqliteConnection"
+    },
+    "secrets1": {
+      "type": "secrets"
+    },
+    "postgresql1": {
+      "type": "postgresql",
+      "connectionId": "ConnectionStrings:PostgreConnection"
     }
   }
 }

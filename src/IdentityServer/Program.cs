@@ -18,7 +18,7 @@ builder.Services.AddDbContext<AppIdentityDbContext>(options =>
         "Sqlite" => options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"),
             x => x.MigrationsAssembly("Infrastructure.Sqlite")),
         "Postgre" => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection"),
-            x => x.MigrationsAssembly("Infrastructure.Postgre")),
+            x => x.MigrationsAssembly("Infrastructure.PostgreSQL")),
         _ => throw new Exception($"Unsupported database provider: {dbProvider}")
     };
 });
@@ -40,7 +40,7 @@ builder.Services.AddIdentityServer()
             "Sqlite" => b.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"),
                 x => x.MigrationsAssembly("Infrastructure.Sqlite")),
             "Postgre" => b.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection"),
-                x => x.MigrationsAssembly("Infrastructure.Postgre")),
+                x => x.MigrationsAssembly("Infrastructure.PostgreSQL")),
             _ => throw new Exception($"Unsupported database provider: {dbProvider}")
         };
     })
@@ -51,7 +51,7 @@ builder.Services.AddIdentityServer()
             "Sqlite" => b.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection"),
                 x => x.MigrationsAssembly("Infrastructure.Sqlite")),
             "Postgre" => b.UseNpgsql(builder.Configuration.GetConnectionString("PostgreConnection"),
-                x => x.MigrationsAssembly("Infrastructure.Postgre")),
+                x => x.MigrationsAssembly("Infrastructure.PostgreSQL")),
             _ => throw new Exception($"Unsupported database provider: {dbProvider}")
         };
     })
