@@ -12,8 +12,4 @@
 		<ProjectReference Include="..\Infrastructure\IdentityServer.Infrastructure.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Identity\Migrations\" />
-	</ItemGroup>
-
 </Project>
