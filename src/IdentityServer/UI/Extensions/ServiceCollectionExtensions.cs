@@ -41,6 +41,12 @@ namespace DuongTruong.Extensions.DependencyInjection
                         connectionStrings["AspNetIdentity"],
                         o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
                 })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(
+                        connectionStrings["AspNetIdentity"],
+                        o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                })
                 .AddAspNetIdentity<ApplicationUser>();
 
             return builder;
