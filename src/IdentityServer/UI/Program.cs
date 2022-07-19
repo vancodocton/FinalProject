@@ -16,12 +16,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+await app.Services.CreateScope().ServiceProvider.InitializeDataAsync();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
+app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapRazorPages();

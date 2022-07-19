@@ -8,10 +8,6 @@
 		<AssemblyName>DuongTruong.IdentityServer.UI</AssemblyName>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Config.cs" />
-	  <Compile Remove="HostingExtensions.cs" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.7" />
