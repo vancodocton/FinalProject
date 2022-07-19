@@ -8,4 +8,8 @@
 		<AssemblyName>DuongTruong.IdentityServer.Infrastructure</AssemblyName>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
+	</ItemGroup>
+
 </Project>

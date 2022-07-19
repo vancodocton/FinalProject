@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2C1F3553-9B95-43AA-91C1-FEDDC9B6AEEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "src\IdentityServer\IdentityServer.csproj", "{A4074879-39CA-4488-A58A-ACA5BB789C10}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{8CBA8331-6C61-4862-BFCD-18EBBE5A16E0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Sqlite", "src\Infrastructure.Sqlite\Infrastructure.Sqlite.csproj", "{41C6463C-8564-4D75-9072-44D0E5662A2E}"
@@ -31,18 +29,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Debug|x64.Build.0 = Debug|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Debug|x86.Build.0 = Debug|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Release|x64.ActiveCfg = Release|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Release|x64.Build.0 = Release|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Release|x86.ActiveCfg = Release|Any CPU
-		{A4074879-39CA-4488-A58A-ACA5BB789C10}.Release|x86.Build.0 = Release|Any CPU
 		{8CBA8331-6C61-4862-BFCD-18EBBE5A16E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8CBA8331-6C61-4862-BFCD-18EBBE5A16E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CBA8331-6C61-4862-BFCD-18EBBE5A16E0}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -120,7 +106,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A4074879-39CA-4488-A58A-ACA5BB789C10} = {2C1F3553-9B95-43AA-91C1-FEDDC9B6AEEB}
 		{8CBA8331-6C61-4862-BFCD-18EBBE5A16E0} = {2C1F3553-9B95-43AA-91C1-FEDDC9B6AEEB}
 		{41C6463C-8564-4D75-9072-44D0E5662A2E} = {2C1F3553-9B95-43AA-91C1-FEDDC9B6AEEB}
 		{8FA3324D-87C4-49FC-BE82-18E387EAEBA4} = {2C1F3553-9B95-43AA-91C1-FEDDC9B6AEEB}

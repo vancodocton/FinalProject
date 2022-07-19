@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace FinalProject.Infrastructure.Data.Identity
+namespace DuongTruong.IdentityServer.Infrastructure.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        public ApplicationUser()
+        public ApplicationUser() : base()
         {
         }
 
