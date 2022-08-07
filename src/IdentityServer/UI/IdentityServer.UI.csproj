@@ -4,8 +4,8 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>DuongTruong.IdentityServer.UI</RootNamespace>
-		<AssemblyName>DuongTruong.IdentityServer.UI</AssemblyName>
+		<RootNamespace>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyName>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
 	</PropertyGroup>
 
 
