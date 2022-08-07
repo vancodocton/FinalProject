@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+		<AssemblyName>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.2" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
+	</ItemGroup>
+
+</Project>
