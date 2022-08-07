@@ -1,12 +1,12 @@
-name: CI CD workflows
+name: "CI CD workflows"
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - ".github/workflows/CI_CD.yml"
-      - "src/IdentityServer/**"
+      - '.github/workflows/CI_CD.yml'
+      - 'src/IdentityServer/**'
   pull_request:
     types:
       - opened
@@ -16,8 +16,8 @@ on:
     branches:
       - "main"
     paths:
-      - ".github/workflows/CI_CD.yml"
-      - "src/IdentityServer/**"
+      - '.github/workflows/CI_CD.yml'
+      - 'src/IdentityServer/**'
   workflow_dispatch:   
  
 env:
