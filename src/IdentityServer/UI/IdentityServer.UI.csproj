@@ -19,7 +19,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Core\IdentityServer.Core.csproj" />
-		<ProjectReference Include="..\Infrastructure.SqlServer.Migrations\IdentityServer.Infrastructure.SqlServer.Migrations.csproj" />
+		<ProjectReference Include="..\Infrastructure.SqlServer\IdentityServer.Infrastructure.SqlServer.csproj" />
 		<ProjectReference Include="..\Infrastructure\IdentityServer.Infrastructure.csproj" />
 	</ItemGroup>
 
