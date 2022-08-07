@@ -60,15 +60,12 @@ jobs:
     environment:
       name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    strategy:
-      fail-fast: false
-      matrix:
-        Azure_WebApp:
-          - IdentityServer:
-            Name: FinalProjectIdentityServer
-            Project_Path: src/IdentityServer/src/UI
-            Package_Path: src/IdentityServer/src/UI/publish
-            Publish_Profile: ${{ secrets.IdentityServer_Development_FFF }}
+    env:
+      AZURE_WEBAPP_NAME: FinalProjectIdentityServer
+      AZURE_WEBAPP_PACKAGE_PATH: src/IdentityServer/publish  
+      AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.IdentityServer_Development_FFF }}
+      AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/publish 
+
     steps:    
     - uses: actions/checkout@v2
 
@@ -80,17 +77,18 @@ jobs:
     - name: Restore and Build
       run: |
         dotnet tool restore
-        dotnet restore ${{ matrix.Azure_WebApp.Project_Path }}
-        dotnet build ${{ matrix.Azure_WebApp.Project_Path }} --configuration ${{ env.CONFIGURATION }} --no-restore
-    
+        dotnet restore "${{ env.AZURE_WEBAPP_PROJECT_PATH }}"
+        dotnet build "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-restore    
+
     - name: Publish
       run: |
-        dotnet publish "${{ matrix.Azure_WebApp.Project_Path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "matrix.Azure_WebApp.Package_Path"
+        run:
+        dotnet publish "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
     - name: Deploy to Azure WebApp
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ matrix.Azure_WebApp.Name }}
-        package: ${{ matrix.Azure_WebApp.Package_Path }}
-        publish-profile: ${{ matrix.Azure_WebApp.Publish_Profile }} 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }} 
