@@ -3,7 +3,7 @@ using DuongTruong.IdentityServer.UI;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace DuongTruong.Extensions.DependencyInjection
+namespace DuongTruong.IdentityServer.UI.Configurations
 {
     public static class ServiceCollectionExtensions
     {
