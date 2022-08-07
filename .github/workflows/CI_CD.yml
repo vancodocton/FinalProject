@@ -3,10 +3,10 @@ name: CI CD workflows
 on:
   push:
     branches:
-      - main
+      - "main"
     paths:
-      - .github/workflows/CI_CD.yml
-      - src/IdentityServer
+      - ".github/workflows/CI_CD.yml"
+      - "src/IdentityServer/**"
   pull_request:
     types:
       - opened
@@ -14,10 +14,10 @@ on:
       - reopened
       - closed
     branches:
-      - main
+      - "main"
     paths:
-      - .github/workflows/CI_CD.yml
-      - src/IdentityServer
+      - ".github/workflows/CI_CD.yml"
+      - "src/IdentityServer/**"
   workflow_dispatch:   
  
 env:
@@ -51,7 +51,7 @@ jobs:
       run: dotnet build "${{ matrix.Solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Test
-      run: dotnet test "${{ matrix.Solution.path }}" --no-build
+      run: dotnet test "${{ matrix.Solution.path }}" --no-build --verbosity normal
 
   deploy_stage:
     if: github.event_name == 'push'
