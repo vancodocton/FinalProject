@@ -64,7 +64,7 @@ jobs:
       AZURE_WEBAPP_NAME: FinalProjectIdentityServer
       AZURE_WEBAPP_PACKAGE_PATH: src/IdentityServer/publish  
       AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.IdentityServer_Development_FFF }}
-      AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/publish 
+      AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/ 
 
     steps:    
     - uses: actions/checkout@v2
@@ -84,6 +84,12 @@ jobs:
       run: |
         run:
         dotnet publish "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+
+    - name: Upload Publish Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.AZURE_WEBAPP_NAME }}
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
     - name: Deploy to Azure WebApp
       id: deploy-to-webapp
