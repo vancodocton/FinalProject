@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - .github/workflows/CI_CD.yml
-      - src/IdentityServer/
+      - src/IdentityServer
   pull_request:
     types:
       - opened
@@ -17,7 +17,7 @@ on:
       - main
     paths:
       - .github/workflows/CI_CD.yml
-      - src/IdentityServer/
+      - src/IdentityServer
   workflow_dispatch:   
  
 env:
@@ -51,7 +51,7 @@ jobs:
       run: dotnet build "${{ matrix.Solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Test
-      run: dotnet test "${{ matrix.Solution }}" --no-build
+      run: dotnet test "${{ matrix.Solution.path }}" --no-build
 
   deploy_stage:
     if: github.event_name == 'push'
