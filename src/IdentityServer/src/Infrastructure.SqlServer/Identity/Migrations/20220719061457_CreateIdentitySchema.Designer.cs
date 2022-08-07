@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DuongTruong.IdentityServer.Infrastructure.Identity.Migrations
+namespace DuongTruong.IdentityServer.Infrastructure.SqlServer.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20220719061457_CreateIdentitySchema")]
