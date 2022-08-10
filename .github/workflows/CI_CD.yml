@@ -52,7 +52,7 @@ jobs:
     - name: Test
       run: dotnet test "${{ matrix.Solution.path }}" --no-build --verbosity normal
 
-  deploy_stage:
+  deploy_identityserver_stage:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: build
@@ -78,6 +78,11 @@ jobs:
         dotnet tool restore
         dotnet restore "${{ env.AZURE_WEBAPP_PROJECT_PATH }}"
         dotnet build "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-restore    
+    
+    - name: Generate migrations efbundle
+      run: |
+        dotnet ef migrations bundle --project "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --context ApplicationDbContext --runtime linux-x64 -o "${{ env.AZURE_WEBAPP_PROJECT_PATH }}/efbundle" --verbose
+        dotnet ef migrations bundle --project "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --context ApplicationDbContext --runtime win-x64 -o "${{ env.AZURE_WEBAPP_PROJECT_PATH }}/efbundle.exe" --verbose
 
     - name: Publish
       run: |
