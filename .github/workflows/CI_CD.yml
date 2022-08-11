@@ -99,7 +99,7 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet publish "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ matrix.path }}/publish"
+        dotnet publish "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ matrix.packages.path }}/publish"
 
     - name: Upload Publish Artifacts
       uses: actions/upload-artifact@v2
