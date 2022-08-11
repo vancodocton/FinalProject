@@ -43,8 +43,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        Solution: 
+        solution: 
         - IdentityServer:
+            name: Identity Server
             path: src/IdentityServer/FinalProject.IdentityServer.slnf
     runs-on: ubuntu-latest
     steps:
