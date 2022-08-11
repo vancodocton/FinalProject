@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer.PersistedGrantDb.Migrations
+namespace DuongTruong.IdentityServer.Infrastructure.SqlServer.Identity.Migrations
 {
-    public partial class CreateIdentityServerPersistedGrantDbSchema : Migration
+    public partial class MigratePersistedGrantDbContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
