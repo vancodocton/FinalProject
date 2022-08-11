@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DuongTruong.IdentityServer.Infrastructure.SqlServer.Identity.Migrations
+namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer.ConfigurationDb.Migrations
 {
     [DbContext(typeof(ConfigurationDbContext))]
     partial class ConfigurationDbContextModelSnapshot : ModelSnapshot

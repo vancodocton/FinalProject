@@ -1,4 +1,5 @@
-using DuongTruong.IdentityServer.UI.Configurations;
+using DuongTruong.Extensions.DependencyInjection;
+using DuongTruong.IdentityServer.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

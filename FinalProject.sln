@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.3.32804.467
+VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6026BE0F-0590-47D9-A911-75F3968C6E03}"
 EndProject
@@ -9,15 +9,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F5727180-813E-42B9-B0A3-5F3442D1C033}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Core", "src\IdentityServer\src\Core\IdentityServer.Core.csproj", "{6BB33CC8-4D5B-4FCE-85F7-BEB0E9D9AA4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Core", "src\IdentityServer\src\Core\IdentityServer.Core.csproj", "{6BB33CC8-4D5B-4FCE-85F7-BEB0E9D9AA4F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Infrastructure", "src\IdentityServer\src\Infrastructure\IdentityServer.Infrastructure.csproj", "{25F0F5D4-52FC-42B5-B27A-A6C3A2261A39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Infrastructure", "src\IdentityServer\src\Infrastructure\IdentityServer.Infrastructure.csproj", "{25F0F5D4-52FC-42B5-B27A-A6C3A2261A39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Infrastructure.SqlServer", "src\IdentityServer\src\Infrastructure.SqlServer\IdentityServer.Infrastructure.SqlServer.csproj", "{95A2763C-8822-472D-B3B1-B4B47E74B7A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Infrastructure.SqlServer", "src\IdentityServer\src\Infrastructure.SqlServer\IdentityServer.Infrastructure.SqlServer.csproj", "{95A2763C-8822-472D-B3B1-B4B47E74B7A6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.UI", "src\IdentityServer\src\UI\IdentityServer.UI.csproj", "{120126BF-6BFD-487D-B0DE-1C9214F206F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.UI", "src\IdentityServer\src\UI\IdentityServer.UI.csproj", "{120126BF-6BFD-487D-B0DE-1C9214F206F8}"
 EndProject
 Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0D2A0DBB-978E-4831-94B6-A3F9C2D66608}
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -76,9 +82,6 @@ Global
 		{120126BF-6BFD-487D-B0DE-1C9214F206F8}.Release|x86.ActiveCfg = Release|Any CPU
 		{120126BF-6BFD-487D-B0DE-1C9214F206F8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EB6F0AD9-F0F8-457D-8D7C-DA459CF1BCA8} = {6026BE0F-0590-47D9-A911-75F3968C6E03}
 		{F5727180-813E-42B9-B0A3-5F3442D1C033} = {EB6F0AD9-F0F8-457D-8D7C-DA459CF1BCA8}
@@ -86,8 +89,5 @@ Global
 		{25F0F5D4-52FC-42B5-B27A-A6C3A2261A39} = {F5727180-813E-42B9-B0A3-5F3442D1C033}
 		{95A2763C-8822-472D-B3B1-B4B47E74B7A6} = {F5727180-813E-42B9-B0A3-5F3442D1C033}
 		{120126BF-6BFD-487D-B0DE-1C9214F206F8} = {F5727180-813E-42B9-B0A3-5F3442D1C033}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0D2A0DBB-978E-4831-94B6-A3F9C2D66608}
 	EndGlobalSection
 EndGlobal

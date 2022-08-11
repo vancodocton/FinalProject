@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace DuongTruong.IdentityServer.Infrastructure.SqlServer.Identity.Migrations
+namespace DuongTruong.IdentityServer.Infrastructure.Identity.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
