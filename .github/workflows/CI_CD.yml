@@ -91,15 +91,15 @@ jobs:
         dotnet restore "${{ matrix.packages.path }}"
         dotnet build "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore    
 
-    - name: Generate migrations efbundle
-      continue-on-error: true
-      run: |
-        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --verbose --context ApplicationDbContext --project "${{ matrix.packages.path }}" --output "${{ matrix.packages.path }}/efbundle" -r linux-x64
-        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --verbose --context ApplicationDbContext --project "${{ matrix.packages.path }}" --output "${{ matrix.packages.path }}/efbundle.exe" -r win-x64
-
     - name: Publish
       run: |
         dotnet publish "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ matrix.packages.path }}/publish"
+    
+    - name: Generate migrations efbundle
+      continue-on-error: true
+      run: |
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ matrix.packages.path }}" --output "${{ matrix.packages.path }}/publish/efbundle" -r linux-x64
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ matrix.packages.path }}" --output "${{ matrix.packages.path }}/publish/efbundle.exe" -r win-x64
 
     - name: Upload Publish Artifacts
       uses: actions/upload-artifact@v2
@@ -121,11 +121,11 @@ jobs:
       AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/src/UI
       
     steps:    
-    - name: Dowlload Publish Artifacts
+    - name: Download Publish Artifacts
       uses: actions/download-artifact@v2
       with:
         name: IdentityServer
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
     - name: Deploy to Azure WebApp
       id: deploy-to-webapp
