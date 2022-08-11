@@ -92,8 +92,8 @@ jobs:
     
     - name: Generate migrations efbundle
       run: |
-        dotnet ef migrations bundle --project "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --runtime linux-x64 -o "${{ env.AZURE_WEBAPP_PROJECT_PATH }}/efbundle" --verbose
-        dotnet ef migrations bundle --project "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --runtime win-x64 -o "${{ env.AZURE_WEBAPP_PROJECT_PATH }}/efbundle.exe" --verbose
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --verbose --context ApplicationDbContext --project "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --output "${{ env.AZURE_WEBAPP_PROJECT_PATH }}/efbundle" --runtime linux-x64
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --verbose --context ApplicationDbContext --project "${{ env.AZURE_WEBAPP_PROJECT_PATH }}" --output "${{ env.AZURE_WEBAPP_PROJECT_PATH }}/efbundle.exe" --runtime win-x64
 
     - name: Publish
       run: |
