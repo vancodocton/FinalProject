@@ -45,8 +45,8 @@ jobs:
       matrix:
         solution: 
         - IdentityServer:
-            name: Identity Server
-            path: src/IdentityServer/FinalProject.IdentityServer.slnf
+          name: Identity Server
+          path: src/IdentityServer/FinalProject.IdentityServer.slnf
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -59,13 +59,13 @@ jobs:
     - name: Restore
       run: |
         dotnet tool restore
-        dotnet restore ${{ matrix.Solution.path }}
+        dotnet restore ${{ matrix.solution.path }}
 
     - name: Build
-      run: dotnet build "${{ matrix.Solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build "${{ matrix.solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Test
-      run: dotnet test "${{ matrix.Solution.path }}" --no-build --verbosity normal
+      run: dotnet test "${{ matrix.solution.path }}" --no-build --verbosity normal
 
   dotnet_publish:
     name: Generate and upload publish artifacts of .NET projects.
@@ -77,8 +77,8 @@ jobs:
       matrix:
         packages: 
         - IdentityServer:
-            name: IdentityServer
-            path: src/IdentityServer/src/UI
+          name: IdentityServer
+          path: src/IdentityServer/src/UI
         
     steps:    
     - uses: actions/checkout@v2
