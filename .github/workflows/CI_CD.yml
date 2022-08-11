@@ -10,6 +10,7 @@ on:
   pull_request:
     types:
       - opened
+      - ready_for_review
       - synchronize
       - reopened
     branches:
@@ -38,12 +39,14 @@ env:
 jobs:
   dotnet_CI:
     name: .Net CI
+    if: github.event_name != 'pull_request' || (github.event.pull_request.draft == false)
     strategy:
       fail-fast: false
       matrix:
-        Solution: 
+        solution: 
         - IdentityServer:
-          path: src/IdentityServer/FinalProject.IdentityServer.slnf
+            name: Identity Server
+            path: src/IdentityServer/FinalProject.IdentityServer.slnf
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -74,8 +77,8 @@ jobs:
       matrix:
         packages: 
         - IdentityServer:
-          name: IdentityServer
-          path: src/IdentityServer/src/UI
+            name: IdentityServer
+            path: src/IdentityServer/src/UI
         
     steps:    
     - uses: actions/checkout@v2
