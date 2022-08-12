@@ -20,7 +20,7 @@ else
     app.UseDeveloperExceptionPage();
 }
 
-await app.Services.CreateScope().ServiceProvider.InitializeDataAsync();
+await app.Services.CreateScope().ServiceProvider.SeedDataAsync();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

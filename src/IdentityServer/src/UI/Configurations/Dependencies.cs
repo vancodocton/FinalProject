@@ -1,12 +1,14 @@
-﻿using DuongTruong.IdentityServer.Infrastructure.Identity;
+﻿using DuongTruong.IdentityServer.Infrastructure;
+using DuongTruong.IdentityServer.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using DuongTruong.IdentityServer.Infrastructure;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
 {
     public static class Dependencies
     {
+        static readonly bool isAddInMemoryConfigurationStore = false;
+
         public static IServiceCollection AddDefaultDependencies(
             this IServiceCollection services,
             IConfiguration configuration)
@@ -31,23 +33,25 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             var builder = services.AddIdentityServer(options =>
             {
             })
-                .AddInMemoryConfigurationStore()
+                .AddAspNetIdentity<ApplicationUser>()
                 .AddOperationalStore<ApplicationDbContext>(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(
                         connectionStrings["AspNetIdentity"],
                         o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
-                })
-                .AddAspNetIdentity<ApplicationUser>();
+                });
+
+            if (isAddInMemoryConfigurationStore)
+                builder.AddInMemoryConfigurationStore();
+            else
+                builder.AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseSqlServer(
+                        connectionStrings["AspNetIdentity"],
+                        o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                });
 
             return services;
-        }
-
-        public static IIdentityServerBuilder AddInMemoryConfigurationStore(this IIdentityServerBuilder builder)
-        {
-            return builder.AddInMemoryApiScopes(IdentityServerConfigurations.ApiScopes)
-                .AddInMemoryClients(IdentityServerConfigurations.Clients)
-                .AddInMemoryIdentityResources(IdentityServerConfigurations.IdentityResources);
         }
     }
 }
