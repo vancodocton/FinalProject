@@ -6,7 +6,8 @@
       "src\\IdentityServer\\src\\Infrastructure.SqlServer\\IdentityServer.Infrastructure.SqlServer.csproj",
       "src\\IdentityServer\\src\\Infrastructure\\IdentityServer.Infrastructure.csproj",
       "src\\IdentityServer\\src\\UI\\IdentityServer.UI.csproj",
-      "src\\IdentityServer\\tests\\IntegratedTest\\IdentityServer.IntegratedTest.csproj"
+      "src\\IdentityServer\\tests\\IntegratedTest\\IdentityServer.IntegratedTest.csproj",
+      "src\\IdentityServer\\tests\\UnitTest\\IdentityServer.UnitTest.csproj"
     ]
   }
 }
