@@ -45,7 +45,7 @@ jobs:
       matrix:
         solution: 
         - IdentityServer:
-          name: Identity Server
+          name: IdentityServer
           path: src/IdentityServer/FinalProject.IdentityServer.slnf
     runs-on: ubuntu-latest
     steps:
@@ -65,7 +65,14 @@ jobs:
       run: dotnet build "${{ matrix.solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Test
-      run: dotnet test "${{ matrix.solution.path }}" --no-build --verbosity normal
+      run: dotnet test "${{ matrix.solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --verbosity normal --collect "XPlat Code Coverage"
+    
+    - name: Upload Test Results Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.solution.name }}.TestResults
+        path: |
+          **/TestResults/**
 
   dotnet_publish:
     name: Generate and upload publish artifacts of .NET projects.
