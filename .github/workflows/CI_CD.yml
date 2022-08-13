@@ -74,6 +74,9 @@ jobs:
         path: |
           **/TestResults/**
 
+    - name: Upload TestResults to CodeCov
+      uses: codecov/codecov-action@v3  
+  
   dotnet_publish:
     name: Generate and upload publish artifacts of .NET projects.
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.isCD != 'no')
