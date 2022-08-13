@@ -1,0 +1,7 @@
+# .netconfig is awesome: https://dotnetconfig.org
+
+[reportgenerator]	
+	reports = "**/TestResults/**/*.xml"
+	targetdir = "coveragereport"
+	reporttypes = "cobertura;HtmlInline_AzurePipelines_Dark"
+	assemblyfilters = "-DuongTruong.IdentityServer.Infrastructure.SqlServer;"

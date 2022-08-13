@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/CI_CD.yml'
       - 'src/IdentityServer/**'
+      - '.netconfig'
   pull_request:
     types:
       - opened
@@ -18,6 +19,7 @@ on:
     paths:
       - '.github/workflows/CI_CD.yml'
       - 'src/IdentityServer/**'
+      - '.netconfig'
   workflow_dispatch:   
     inputs:
       isCD:
@@ -45,7 +47,7 @@ jobs:
       matrix:
         solution: 
         - IdentityServer:
-          name: Identity Server
+          name: IdentityServer
           path: src/IdentityServer/FinalProject.IdentityServer.slnf
     runs-on: ubuntu-latest
     steps:
@@ -65,8 +67,29 @@ jobs:
       run: dotnet build "${{ matrix.solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
     - name: Test
-      run: dotnet test "${{ matrix.solution.path }}" --no-build --verbosity normal
+      run: dotnet test "${{ matrix.solution.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --verbosity normal --collect "XPlat Code Coverage"
+    
+    - name: Upload Test Results Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.solution.name }}.TestResults
+        path: |
+          **/TestResults/**
 
+    - name: Generate Code Coverage Report
+      run: dotnet reportgenerator
+
+    - name: Upload Code Coverage Report Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.solution.name }}.CoverageReport
+        path: coveragereport/
+          
+    - name: Upload TestResults to CodeCov
+      uses: codecov/codecov-action@v3  
+      with:
+        files: coveragereport/Cobertura.xml
+  
   dotnet_publish:
     name: Generate and upload publish artifacts of .NET projects.
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.isCD != 'no')

@@ -8,6 +8,10 @@
 		<AssemblyName>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
 	</PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="DuongTruong.IdentityServer.IntegratedTest"/>
+  </ItemGroup>
+  
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.8" />
 	</ItemGroup>
