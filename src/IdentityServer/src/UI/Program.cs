@@ -33,3 +33,8 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
+
+namespace DuongTruong.IdentityServer.UI
+{
+    public partial class Program { }
+}
