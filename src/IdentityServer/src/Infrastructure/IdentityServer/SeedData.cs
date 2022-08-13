@@ -1,10 +1,9 @@
-﻿using Duende.IdentityServer.EntityFramework.Entities;
-using Duende.IdentityServer.EntityFramework.Interfaces;
+﻿using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Duende.IdentityServer.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq.Expressions;
+using Microsoft.Extensions.Logging;
 
 namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer
 {
@@ -17,7 +16,16 @@ namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer
             where T : DbContext, IConfigurationDbContext
         {
             var dbContext = services.GetRequiredService<T>();
-            dbContext.Database.Migrate();
+            var logger = services.GetRequiredService<ILogger<WebApplication>>();
+
+            try
+            {
+                dbContext.Database.Migrate();
+            }
+            catch(Exception ex)
+            {
+                logger.LogError("Cannot migrate in runtime", ex);
+            }
 
             foreach (var resource in identityResources)
             {
