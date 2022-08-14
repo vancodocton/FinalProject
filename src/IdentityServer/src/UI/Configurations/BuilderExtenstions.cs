@@ -1,11 +1,12 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
-using DuongTruong.IdentityServer.Infrastructure.Identity;
 using DuongTruong.IdentityServer.Infrastructure.IdentityServer;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
 {
     public static partial class BuilderExtenstions
     {
+        [ExcludeFromCodeCoverage]
         public static IIdentityServerBuilder AddInMemoryConfigurationStore(this IIdentityServerBuilder builder)
         {
             return builder.AddInMemoryApiScopes(IdentityServerConfigurations.ApiScopes)
