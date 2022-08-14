@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="DuongTruong.IdentityServer.IntegratedTest"/>
+    <InternalsVisibleTo Include="DuongTruong.IdentityServer.IntegratedTest" />
   </ItemGroup>
   
 	<ItemGroup>

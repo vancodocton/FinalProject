@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
 {
-    public class IndentityServerFactory : WebApplicationFactory<UI.Program>
+    public class IdentityServerFactory : WebApplicationFactory<UI.Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -22,7 +22,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
 
                     services.AddDbContext<ApplicationDbContext>(options =>
                     {
-                        options.UseInMemoryDatabase("AspNetIdentity.InMemory");
+                        options.UseInMemoryDatabase($"ApplicationDb.{this.GetHashCode()}");
                     });
                 }
 
@@ -35,7 +35,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
                         services.Remove(options);
                         services.AddDbContext<ConfigurationDbContext>(options =>
                         {
-                            options.UseInMemoryDatabase("ConfigurationDb.InMemory");
+                            options.UseInMemoryDatabase($"ApplicationDb.{this.GetHashCode()}");
                         });
                     }
                 }
@@ -59,5 +59,10 @@ namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
 
             base.ConfigureWebHost(builder);
         }
+
+        public static WebApplicationFactoryClientOptions DefaultClientOptions { get; set; } = new()
+        {
+            BaseAddress = new Uri("https://localhost:7011"),
+        };
     }
 }

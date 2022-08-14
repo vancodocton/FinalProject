@@ -10,7 +10,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
 
         public WebApplicationFactory<UI.Program> GetIdentityServer(string environmentName)
         {
-            return new IndentityServerFactory().WithWebHostBuilder(options =>
+            return new IdentityServerFactory().WithWebHostBuilder(options =>
             {
                 options.ConfigureAppConfiguration((context, builder) =>
                 {
