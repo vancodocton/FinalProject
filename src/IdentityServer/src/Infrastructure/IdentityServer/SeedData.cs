@@ -22,7 +22,7 @@ namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer
             {
                 dbContext.Database.Migrate();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogError("Cannot migrate in runtime", ex);
             }
