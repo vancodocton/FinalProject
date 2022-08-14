@@ -18,61 +18,42 @@ namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer
             var dbContext = services.GetRequiredService<T>();
             var logger = services.GetRequiredService<ILogger<WebApplication>>();
 
-            try
-            {
+            if (dbContext.Database.IsRelational())
                 dbContext.Database.Migrate();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError("Cannot migrate in runtime", ex);
-            }
+            else
+                dbContext.Database.EnsureCreated();
 
             foreach (var resource in identityResources)
             {
-                var entityInDb = await dbContext.IdentityResources.SingleOrDefaultAsync(x => x.Name == resource.Name);
+                var entityInDb = await dbContext.IdentityResources.AsNoTracking()
+                    .SingleOrDefaultAsync(x => x.Name == resource.Name);
 
                 var entity = resource.ToEntity();
 
-                if (entityInDb != null)
-                {
-                    entity.Id = entityInDb.Id;
-                    dbContext.Entry(entityInDb).CurrentValues.SetValues(entity);
-                    dbContext.Update(entityInDb);
-                }
-                else
-                    dbContext.Add(entity);
+                entity.Id = entityInDb?.Id ?? 0;
+                dbContext.Update(entity);
             }
 
             foreach (var apiScope in apiScopes)
             {
-                var entityInDb = await dbContext.ApiScopes.SingleOrDefaultAsync(x => x.Name == apiScope.Name);
+                var entityInDb = await dbContext.ApiScopes.AsNoTracking()
+                    .SingleOrDefaultAsync(x => x.Name == apiScope.Name);
 
                 var entity = apiScope.ToEntity();
 
-                if (entityInDb != null)
-                {
-                    entity.Id = entityInDb.Id;
-                    dbContext.Entry(entityInDb).CurrentValues.SetValues(entity);
-                    dbContext.Update(entityInDb);
-                }
-                else
-                    dbContext.Add(entity);
+                entity.Id = entityInDb?.Id ?? 0;
+                dbContext.Update(entity);
             }
 
             foreach (var client in clients)
             {
-                var entityInDb = await dbContext.Clients.SingleOrDefaultAsync(c => c.ClientId == client.ClientId);
+                var entityInDb = await dbContext.Clients.AsNoTracking()
+                    .SingleOrDefaultAsync(c => c.ClientId == client.ClientId);
 
                 var entity = client.ToEntity();
 
-                if (entityInDb != null)
-                {
-                    entity.Id = entityInDb.Id;
-                    dbContext.Entry(entityInDb).CurrentValues.SetValues(entity);
-                    dbContext.Update(entityInDb);
-                }
-                else
-                    dbContext.Add(entity);
+                entity.Id = entityInDb?.Id ?? 0;
+                dbContext.Update(entity);
             }
 
             await dbContext.SaveChangesAsync();
