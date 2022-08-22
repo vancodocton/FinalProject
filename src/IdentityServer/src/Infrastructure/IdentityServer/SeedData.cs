@@ -17,42 +17,35 @@ namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer;
             var dbContext = services.GetRequiredService<T>();
         var logger = services.GetRequiredService<ILogger<T>>();
 
+        var rows = 0;
             foreach (var resource in identityResources)
             {
-                var entityInDb = await dbContext.IdentityResources.AsNoTracking()
-                    .SingleOrDefaultAsync(x => x.Name == resource.Name);
-
-                var entity = resource.ToEntity();
-
-                entity.Id = entityInDb?.Id ?? 0;
-                dbContext.Update(entity);
+            var isExisted = await dbContext.IdentityResources.AnyAsync(x => x.Name == resource.Name);
+            if (!isExisted)
+                dbContext.IdentityResources.Add(resource.ToEntity());
             }
+        rows += await dbContext.SaveChangesAsync();
 
             foreach (var apiScope in apiScopes)
             {
-                var entityInDb = await dbContext.ApiScopes.AsNoTracking()
-                    .SingleOrDefaultAsync(x => x.Name == apiScope.Name);
+            var isExisted = await dbContext.ApiScopes.AnyAsync(x => x.Name == apiScope.Name);
 
-                var entity = apiScope.ToEntity();
-
-                entity.Id = entityInDb?.Id ?? 0;
-                dbContext.Update(entity);
+            if (!isExisted)
+                await dbContext.ApiScopes.AddAsync(apiScope.ToEntity());
             }
+        rows += await dbContext.SaveChangesAsync();
 
             foreach (var client in clients)
             {
-                var entityInDb = await dbContext.Clients.AsNoTracking()
-                    .SingleOrDefaultAsync(c => c.ClientId == client.ClientId);
-
-                var entity = client.ToEntity();
-
-                entity.Id = entityInDb?.Id ?? 0;
-                dbContext.Update(entity);
+            var isExisted = await dbContext.Clients.AnyAsync(x => x.ClientId == client.ClientId);
+            if (!isExisted)
+                await dbContext.Clients.AddAsync(client.ToEntity());
             }
+        rows += await dbContext.SaveChangesAsync();
 
-            await dbContext.SaveChangesAsync();
+        logger.LogInformation($"Added {rows} row(s) to configuration database.");
 
             return services;
         }
     }
-}
+
