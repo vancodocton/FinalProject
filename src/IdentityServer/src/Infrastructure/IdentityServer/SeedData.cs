@@ -1,12 +1,11 @@
 ﻿using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer
-{
+namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer;
+
     public static class SeedData
     {
         public static async Task<IServiceProvider> InitialConfigurationDataAsync<T>(this IServiceProvider services,
@@ -16,12 +15,7 @@ namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer
             where T : DbContext, IConfigurationDbContext
         {
             var dbContext = services.GetRequiredService<T>();
-            var logger = services.GetRequiredService<ILogger<WebApplication>>();
-
-            if (dbContext.Database.IsRelational())
-                dbContext.Database.Migrate();
-            else
-                dbContext.Database.EnsureCreated();
+        var logger = services.GetRequiredService<ILogger<T>>();
 
             foreach (var resource in identityResources)
             {
