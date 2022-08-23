@@ -1,16 +1,10 @@
-﻿using Duende.IdentityServer.EntityFramework.DbContexts;
-using DuongTruong.IdentityServer.Infrastructure.Identity;
-using DuongTruong.IdentityServer.Infrastructure.IdentityServer;
-using DuongTruong.IdentityServer.Infrastructure.Services;
-using DuongTruong.IdentityServer.UI.Utils;
-using Microsoft.EntityFrameworkCore;
+﻿using DuongTruong.IdentityServer.UI.Utils;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
 {
     public static partial class BuilderExtenstions
-    {    
+    {
         public static async Task<WebApplication> WarmUpAsync(this WebApplication app, WarmUpBehavior warmUpBehavior = WarmUpBehavior.Skip)
         {
             if (warmUpBehavior == WarmUpBehavior.Skip)
