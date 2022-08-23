@@ -1,12 +1,25 @@
 using DuongTruong.IdentityServer.UI.Configurations;
+using DuongTruong.IdentityServer.UI.Utils;
+
+var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
 var builder = WebApplication.CreateBuilder(args);
+
+var warmUpBehavior = builder.Configuration.GetValue("WarmUp", WarmUpBehavior.Skip);
+if (warmUpBehavior != WarmUpBehavior.Skip)
+{
+    builder.Services.AddSingleton(stopwatch);
+}
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDefaultDependencies(builder.Configuration);
 
 var app = builder.Build();
+
+await app.WarmUpAsync(warmUpBehavior);
+if (warmUpBehavior == WarmUpBehavior.Exit)
+    return;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -20,8 +33,6 @@ else
     app.UseDeveloperExceptionPage();
 }
 
-await app.Services.CreateScope().ServiceProvider.SeedDataAsync();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -34,7 +45,12 @@ app.MapRazorPages();
 
 app.Run();
 
+app.Logger.LogInformation($"App running for {stopwatch.Elapsed} s.");
+
 namespace DuongTruong.IdentityServer.UI
 {
-    public partial class Program { }
+    public partial class Program
+    {
+        public readonly static SemaphoreSlim SemaphoreSlim = new(1);
+    }
 }
