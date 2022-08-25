@@ -1,7 +1,7 @@
 ﻿using DuongTruong.IdentityServer.Infrastructure;
 using DuongTruong.IdentityServer.Infrastructure.Identity;
+using DuongTruong.IdentityServer.Infrastructure.SqlServer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
 {
@@ -17,9 +17,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(
-                    connectionStrings["AspNetIdentity"],
-                    options => options.MigrationsAssembly(Infrastructure.SqlServer.Assembly.Name));
+                options.UseDefaultSqlServer(connectionString: connectionStrings["AspNetIdentity"]);
             });
 
             services.AddCustomIdentity(options =>
@@ -36,9 +34,8 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        connectionStrings["AspNetIdentity"],
-                        o => o.MigrationsAssembly(Infrastructure.SqlServer.Assembly.Name));
+                    options.ConfigureDbContext = b => b.UseDefaultSqlServer(
+                        connectionString: connectionStrings["AspNetIdentity"]);
                 });
 
             if (isAddInMemoryConfigurationStore)
@@ -46,9 +43,8 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             else
                 builder.AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        connectionStrings["AspNetIdentity"],
-                        o => o.MigrationsAssembly(Infrastructure.SqlServer.Assembly.Name));
+                    options.ConfigureDbContext = b => b.UseDefaultSqlServer(
+                        connectionString: connectionStrings["AspNetIdentity"]);
                 });
 
             return services;
