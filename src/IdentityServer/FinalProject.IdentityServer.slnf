@@ -3,6 +3,7 @@
     "path": "..\\..\\FinalProject.sln",
     "projects": [
       "src\\IdentityServer\\src\\Core\\IdentityServer.Core.csproj",
+      "src\\IdentityServer\\src\\Infrastructure.PostgreSql\\IdentityServer.Infrastructure.PostgreSql.csproj",
       "src\\IdentityServer\\src\\Infrastructure.SqlServer\\IdentityServer.Infrastructure.SqlServer.csproj",
       "src\\IdentityServer\\src\\Infrastructure\\IdentityServer.Infrastructure.csproj",
       "src\\IdentityServer\\src\\UI\\IdentityServer.UI.csproj",
