@@ -19,7 +19,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             {
                 options.UseSqlServer(
                     connectionStrings["AspNetIdentity"],
-                    options => options.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                    options => options.MigrationsAssembly(Infrastructure.SqlServer.Assembly.Name));
             });
 
             services.AddCustomIdentity(options =>
@@ -38,7 +38,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(
                         connectionStrings["AspNetIdentity"],
-                        o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                        o => o.MigrationsAssembly(Infrastructure.SqlServer.Assembly.Name));
                 });
 
             if (isAddInMemoryConfigurationStore)
@@ -48,7 +48,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(
                         connectionStrings["AspNetIdentity"],
-                        o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                        o => o.MigrationsAssembly(Infrastructure.SqlServer.Assembly.Name));
                 });
 
             return services;
