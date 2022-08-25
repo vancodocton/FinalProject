@@ -1,6 +1,6 @@
 ﻿using DuongTruong.IdentityServer.Infrastructure;
 using DuongTruong.IdentityServer.Infrastructure.Identity;
-using DuongTruong.IdentityServer.Infrastructure.SqlServer;
+using DuongTruong.IdentityServer.Infrastructure.PostgreSql;
 using Microsoft.AspNetCore.Identity;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
@@ -17,7 +17,8 @@ namespace DuongTruong.IdentityServer.UI.Configurations
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseDefaultSqlServer(connectionString: connectionStrings["AspNetIdentity"]);
+                //options.UseDefaultSqlServer(connectionString: connectionStrings["AspNetIdentity"]);
+                options.UseDefaultNpgsql(connectionString: connectionStrings["DockerPostgreSql"]);
             });
 
             services.AddCustomIdentity(options =>
@@ -34,8 +35,8 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseDefaultSqlServer(
-                        connectionString: connectionStrings["AspNetIdentity"]);
+                    options.ConfigureDbContext = b => b.UseDefaultNpgsql(
+                        connectionString: connectionStrings["DockerPostgreSql"]);
                 });
 
             if (isAddInMemoryConfigurationStore)
@@ -43,11 +44,13 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             else
                 builder.AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseDefaultSqlServer(
-                        connectionString: connectionStrings["AspNetIdentity"]);
+                    options.ConfigureDbContext = b => b.UseDefaultNpgsql(
+                        connectionString: connectionStrings["DockerPostgreSql"]);
                 });
 
             return services;
         }
     }
 }
+
+// dotnet ef migrations add -p ..\Infrastructure.PostgreSql\ -c PersistedGrantDbContext -o IdentityServer/PersistedGrantDb/Migrations CreatePersistedGrantDbSchema

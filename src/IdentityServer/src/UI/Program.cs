@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var warmUpBehavior = builder.Configuration.GetValue("WarmUp", WarmUpBehavior.Skip);
 if (warmUpBehavior != WarmUpBehavior.Skip)
 {
+    //builder.Services.AddSingleton(typeof(RuntimeMigrationService<>));
     builder.Services.AddSingleton(stopwatch);
 }
 
