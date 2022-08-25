@@ -19,9 +19,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest
         [Fact]
         public async Task Test_SeedDataConfigurationDbAsync()
         {
-            var client1 = factory.CreateDefaultClient();
-
-            using (var serviceScope = factory.Server.Services.CreateScope())
+            using (var serviceScope = factory.Services.CreateScope())
             {
                 var sp = serviceScope.ServiceProvider;
                 var db = sp.GetService<ConfigurationDbContext>();
@@ -39,6 +37,8 @@ namespace DuongTruong.IdentityServer.IntegratedTest
                     //db.SaveChanges();
                 }
             }
+
+            var client1 = factory.CreateDefaultClient();
         }
     }
 }

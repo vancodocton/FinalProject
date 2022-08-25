@@ -5,11 +5,11 @@ using Xunit.Abstractions;
 
 namespace DuongTruong.IdentityServer.IntegratedTest
 {
-    public class Test_IdentityServer_Auth_Endpoints : IClassFixture<WebAppsFixture>
+    public class Test_IdentityServer_Auth_Endpoints : IClassFixture<IdentityServerFixture>
     {
         private readonly WebApplicationFactory<UI.Program> factory;
 
-        public Test_IdentityServer_Auth_Endpoints(WebAppsFixture fixture)
+        public Test_IdentityServer_Auth_Endpoints(IdentityServerFixture fixture)
         {
             factory = fixture.GetIdentityServer("Development");
         }
@@ -17,7 +17,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest
         [Fact]
         public async Task Test_Discovery_Endpoint_Return_JsonDocument()
         {
-            var client = factory.CreateClient(IdentityServerFactory.DefaultClientOptions);
+            var client = factory.CreateDefaultClient();
 
             var json = await client.GetFromJsonAsync<object>("/.well-known/openid-configuration");
 
@@ -30,7 +30,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
-            var client = factory.CreateClient(IdentityServerFactory.DefaultClientOptions);
+            var client = factory.CreateDefaultClient();
 
             // Act
             var response = await client.GetAsync(url);
