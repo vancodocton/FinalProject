@@ -1,22 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
 {
-    public class WebAppsFixture
+    public class IdentityServerFixture
     {
-        public WebAppsFixture()
+        private static object _lock = new();
+
+        private static Dictionary<string, IdentityServerFactory> _factories = new();
+
+        public IdentityServerFixture()
         {
         }
 
         public WebApplicationFactory<UI.Program> GetIdentityServer(string environmentName)
         {
-            return new IdentityServerFactory().WithWebHostBuilder(options =>
+            lock (_lock)
             {
-                options.ConfigureAppConfiguration((context, builder) =>
+                if (_factories.GetValueOrDefault(environmentName) is null)
                 {
-                    context.HostingEnvironment.EnvironmentName = environmentName;
-                });
-            });
+                    var factory = new IdentityServerFactory(environmentName);
+
+                    _factories.Add(environmentName, factory);
+                };
+            }
+
+            return _factories[environmentName];
         }
     }
 }
