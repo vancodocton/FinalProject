@@ -1,9 +1,9 @@
-﻿namespace DuongTruong.IdentityServer.Infrastructure
+﻿namespace DuongTruong.IdentityServer.Infrastructure.SqlServer
 {
-    public partial class MigrationAssemblyName
+    public class Assembly
     {
-        public static string SqlServer =>
-            typeof(MigrationAssemblyName).Assembly.GetName().Name
-            ?? throw new ArgumentNullException(nameof(SqlServer));
+        public static string Name =>
+            typeof(Assembly).Assembly.GetName().Name
+            ?? throw new ArgumentNullException(nameof(Name));
     }
 }

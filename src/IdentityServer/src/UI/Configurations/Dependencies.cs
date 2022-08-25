@@ -34,7 +34,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             {
             })
                 .AddAspNetIdentity<ApplicationUser>()
-                .AddOperationalStore<ApplicationDbContext>(options =>
+                .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseSqlServer(
                         connectionStrings["AspNetIdentity"],
