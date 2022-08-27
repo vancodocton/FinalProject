@@ -6,13 +6,9 @@ var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 var builder = WebApplication.CreateBuilder(args);
 
 var warmUpBehavior = builder.Configuration.GetValue("WarmUp", WarmUpBehavior.Skip);
-if (warmUpBehavior != WarmUpBehavior.Skip)
-{
-    //builder.Services.AddSingleton(typeof(RuntimeMigrationService<>));
-    builder.Services.AddSingleton(stopwatch);
-}
 
 // Add services to the container.
+builder.Services.AddSingleton(stopwatch);
 builder.Services.AddRazorPages();
 builder.Services.AddDefaultDependencies(builder.Configuration);
 

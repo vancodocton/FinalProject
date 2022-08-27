@@ -1,22 +1,17 @@
 ﻿using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace DuongTruong.IdentityServer.Infrastructure.IdentityServer;
 
 public static class SeedData
 {
-    public static async Task<IServiceProvider> InitialConfigurationDataAsync<T>(this IServiceProvider services,
+    public static async Task<int> InitialConfigurationDataAsync<T>(this T dbContext,
         IEnumerable<Duende.IdentityServer.Models.IdentityResource> identityResources,
         IEnumerable<Duende.IdentityServer.Models.ApiScope> apiScopes,
         IEnumerable<Duende.IdentityServer.Models.Client> clients)
         where T : DbContext, IConfigurationDbContext
     {
-        var dbContext = services.GetRequiredService<T>();
-        var logger = services.GetRequiredService<ILogger<T>>();
-
         var rows = 0;
         foreach (var resource in identityResources)
         {
@@ -24,7 +19,6 @@ public static class SeedData
             if (!isExisted)
                 dbContext.IdentityResources.Add(resource.ToEntity());
         }
-        rows += await dbContext.SaveChangesAsync();
 
         foreach (var apiScope in apiScopes)
         {
@@ -33,7 +27,6 @@ public static class SeedData
             if (!isExisted)
                 await dbContext.ApiScopes.AddAsync(apiScope.ToEntity());
         }
-        rows += await dbContext.SaveChangesAsync();
 
         foreach (var client in clients)
         {
@@ -41,10 +34,8 @@ public static class SeedData
             if (!isExisted)
                 await dbContext.Clients.AddAsync(client.ToEntity());
         }
+
         rows += await dbContext.SaveChangesAsync();
-
-        logger.LogInformation("Added {rows} row(s) to configuration database.", rows);
-
-        return services;
+        return rows;
     }
 }
