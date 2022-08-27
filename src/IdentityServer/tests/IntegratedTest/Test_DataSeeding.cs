@@ -26,7 +26,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest
 
                 if (db != null)
                 {
-                    await sp.InitialConfigurationDataAsync<ConfigurationDbContext>(
+                    await db.InitialConfigurationDataAsync(
                         IdentityServerConfigurations.IdentityResources,
                         IdentityServerConfigurations.ApiScopes,
                         IdentityServerConfigurations.Clients);
