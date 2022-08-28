@@ -105,18 +105,14 @@ jobs:
       with:
         files: coveragereport/Cobertura.xml
   
-  dotnet_publish:
+  dotnet_publish_IdentityServer:
     name: Generate and upload publish artifacts of .NET projects.
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.isCD != 'no')
     runs-on: ubuntu-latest
     needs: dotnet_CI
-    strategy:
-      fail-fast: false
-      matrix:
-        packages: 
-        - IdentityServer:
-          name: IdentityServer
-          path: src/IdentityServer/src/UI
+    env:
+      PACKAGE_NAME: IdentityServer
+      PROJECT_PATH: src/IdentityServer/src/UI
         
     steps:    
     - uses: actions/checkout@v2
@@ -134,29 +130,38 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet publish "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ matrix.packages.path }}/publish"
+        dotnet publish "${{ env.PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.PROJECT_PATH }}/publish"
     
     - name: Generate migrations efbundle
       continue-on-error: true
       run: |
-        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ matrix.packages.path }}" --output "${{ matrix.packages.path }}/publish/efbundle" -r linux-x64
-        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ matrix.packages.path }}" --output "${{ matrix.packages.path }}/publish/efbundle.exe" -r win-x64
+        mkdir -p "${{ env.PROJECT_PATH }}/efbundle/linux-x64"
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ApplicationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-AppDb" -r linux-x64
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ConfigurationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-ConfigDb" -r linux-x64
+        dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context PersistedGrantDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-OperaDb" -r linux-x64
+        #dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ env.PROJECT_PATH }}" --output ""${{ env.PROJECT_PATH }}"/publish/efbundle.exe" -r win-x64
 
-    - name: Upload Publish Artifacts
+    - name: Upload Application Publish Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.packages.name }}
-        path: ${{ matrix.packages.path }}/publish
+        name: ${{ env.PACKAGE_NAME }}
+        path: ${{ env.PROJECT_PATH }}/publish
+
+    - name: Upload Efbundle Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.PACKAGE_NAME }}.efbundle.linux-x64
+        path: ${{ env.PROJECT_PATH }}/efbundle/linux-x64
   
   deploy_identityserver_on_stage:
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.isCD == 'stage') 
     runs-on: ubuntu-latest
-    needs: dotnet_publish
+    needs: dotnet_publish_IdentityServer
     environment:
       name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     env:
-      AZURE_WEBAPP_NAME: FinalProjectIdentityServer
+      AZURE_WEBAPP_NAME: FinalProject-IdentityServer
       AZURE_WEBAPP_PACKAGE_PATH: src/IdentityServer/src/UI/publish
       AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.IdentityServer_Development_FFF }}
       AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/src/UI
@@ -167,6 +172,12 @@ jobs:
       with:
         name: IdentityServer
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Download Efbundle Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: IdentityServer.efbundle.linux-x64
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/efbundle/linux-x64
 
     - name: Deploy to Azure WebApp
       id: deploy-to-webapp
