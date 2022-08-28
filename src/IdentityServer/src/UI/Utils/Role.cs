@@ -3,8 +3,6 @@
 
     public class Role
     {
-        public static object Lock { get; } = new object();
-
         public const string Default = "User";
 
         public const string Admin = "Admin";

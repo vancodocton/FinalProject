@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
 using DuongTruong.IdentityServer.Infrastructure.Identity;
+using DuongTruong.IdentityServer.UI.Utils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -11,76 +12,101 @@ namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
 {
     public class IdentityServerFactory : WebApplicationFactory<UI.Program>
     {
-        private static readonly SemaphoreSlim semaphoreSlim = new(1, 1);
+        private readonly int _port = 7000;
+        private readonly string _environmentName;
 
+        private static readonly SemaphoreSlim _semaphoreWarmUp = new(1, 1);
+        private static bool _isWarmUp;
         private static bool _isDatabaseInitialized;
-        public bool IsSharedDatabase { get; }
+        private static IdentityServerFactory __warmupInstance = new();
 
-        public IdentityServerFactory(string? SharedDatabaseName = null) : base()
-                    {
-            ClientOptions.BaseAddress = new Uri("https://localhost:7011");
-                }
-
-        protected override IHost CreateHost(IHostBuilder builder)
-                {
-            builder.ConfigureHostConfiguration(config =>
-                    {
-                config.AddEnvironmentVariables("ASPNETCORE");
-                config.AddInMemoryCollection(new Dictionary<string, string>()
-                        {
-                    ["ConnectionStrings:DockerPostgreSql"] = ConnectionStrings.DockerPostgreSql("IdentityServer-IntegrationTestDb"),
-                        });
-            })
-                .UseEnvironment("Development");
-
-            return base.CreateHost(builder);
-                    }
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        public IdentityServerFactory() : this(Environments.Development)
         {
-            builder.ConfigureServices(services =>
+        }
+
+        private IdentityServerFactory(string environmentName) : base()
+        {
+
+            ClientOptions.BaseAddress = new Uri(string.Format("https://localhost:{0}", _port++));
+            _environmentName = environmentName;
+
+            try
             {
-                var sp = services.BuildServiceProvider();
-
-                try
+                _semaphoreWarmUp.Wait();
+                if (!_isWarmUp && __warmupInstance is not null)
                 {
-                    semaphoreSlim.Wait();
+                    // avoid infinite loop while initializing __factory
+                    var __factory = __warmupInstance
+                        .WithWebHostBuilder(config =>
+                        {
+                            config.UseSetting("WarmUp", WarmUpBehavior.Exit.ToString());
 
-                    using var scope = sp.CreateScope();
-                    EnsureCreatedDatabase(sp);
-                }
-                catch
-                    {
-                    //throw;
-                    }
-                finally
-                    {
-                    semaphoreSlim.Release();
-                    }
-            });
-                }
+                            config.ConfigureServices(options =>
+                            {
+                                var serviceProvider = options.BuildServiceProvider();
 
-        public void EnsureCreatedDatabase(IServiceProvider sp)
+                                var isDone = EnsureCreatedDatabase(serviceProvider);
+                            });
+                        });
+                    // The app is configured to exit after warmed up, exception is always throwns.
+                    __factory.CreateDefaultClient();
+                }
+            }
+            catch
+            {
+                _isWarmUp = true;
+                // throw;
+            }
+            finally
+            {
+                _semaphoreWarmUp.Release();
+            }
+        }
+
+       
+
+        private static bool EnsureCreatedDatabase(IServiceProvider sp)
         {
             if (!_isDatabaseInitialized)
             {
                 using var scope = sp.CreateScope();
                 var scopedServices = scope.ServiceProvider;
 
-                var applicationDbContext = scopedServices.GetService<ApplicationDbContext>();
-                var configurationDbContext = scopedServices.GetService<ConfigurationDbContext>();
-                var persistedGrantDbContext = scopedServices.GetService<PersistedGrantDbContext>();
+                var applicationDbContext = scopedServices.GetRequiredService<ApplicationDbContext>();
+                var configurationDbContext = scopedServices.GetRequiredService<ConfigurationDbContext>();
+                var persistedGrantDbContext = scopedServices.GetRequiredService<PersistedGrantDbContext>();
 
-                _ = applicationDbContext?.Database.EnsureDeleted();
-                _ = configurationDbContext?.Database.EnsureDeleted();
-                _ = persistedGrantDbContext?.Database.EnsureDeleted();
+                _ = applicationDbContext.Database.EnsureDeleted();
+                _ = configurationDbContext.Database.EnsureDeleted();
+                _ = persistedGrantDbContext.Database.EnsureDeleted();
 
-                applicationDbContext?.Database.Migrate();
-                configurationDbContext?.Database.Migrate();
-                persistedGrantDbContext?.Database.Migrate();
+                applicationDbContext.Database.MigrateAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+                configurationDbContext.Database.MigrateAsync().ConfigureAwait(true).GetAwaiter().GetResult();
+                persistedGrantDbContext.Database.MigrateAsync().ConfigureAwait(true).GetAwaiter().GetResult();
 
                 _isDatabaseInitialized = true;
+                return true;
             }
+            return false;
+        }
+
+        protected override IHost CreateHost(IHostBuilder builder)
+        {
+            builder.UseEnvironment(_environmentName);
+
+            builder.ConfigureHostConfiguration((config) =>
+            {
+                config.AddEnvironmentVariables("ASPNETCORE");
+
+                var inMemory = new Dictionary<string, string>()
+                {
+                    ["ConnectionStrings:DockerPostgreSql"] = ConnectionStrings.DockerPostgreSql("IdentityServer-IntegrationTestDb"),
+                };
+                config.AddInMemoryCollection(inMemory);
+            });
+
+            var host = base.CreateHost(builder);
+            return host;
         }
     }
 }

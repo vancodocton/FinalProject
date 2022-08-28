@@ -5,13 +5,10 @@ using Xunit.Abstractions;
 
 namespace DuongTruong.IdentityServer.IntegratedTest
 {
-    public class Test_IdentityServer_Auth_Endpoints : IClassFixture<IdentityServerFixture>
+    public class Test_IdentityServer_Auth_Endpoints : TestBase
     {
-        private readonly WebApplicationFactory<UI.Program> factory;
-
-        public Test_IdentityServer_Auth_Endpoints(IdentityServerFixture fixture)
+        public Test_IdentityServer_Auth_Endpoints(ITestOutputHelper outputHelper, IdentityServerFactory factory) : base(outputHelper, factory)
         {
-            factory = fixture.GetIdentityServer("Development");
         }
 
         [Fact]

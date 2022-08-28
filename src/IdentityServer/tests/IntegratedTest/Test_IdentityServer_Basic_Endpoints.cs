@@ -1,15 +1,15 @@
 using DuongTruong.IdentityServer.IntegratedTest.Fixtures;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Xunit.Abstractions;
 
 namespace DuongTruong.IdentityServer.IntegratedTest
 {
-    public class Test_IdentityServer_Basic_Endpoints : IClassFixture<IdentityServerFixture>
+    public class Test_IdentityServer_Basic_Endpoints : TestBase
     {
-        private readonly WebApplicationFactory<UI.Program> factory;
-
-        public Test_IdentityServer_Basic_Endpoints(IdentityServerFixture fixture)
+        public Test_IdentityServer_Basic_Endpoints(
+            ITestOutputHelper outputHelper, 
+            IdentityServerFactory factory) : base(outputHelper, factory)        
         {
-            factory = fixture.GetIdentityServer("Development");
         }
 
         [Theory]

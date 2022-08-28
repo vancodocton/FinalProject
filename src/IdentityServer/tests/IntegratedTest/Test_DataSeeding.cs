@@ -2,18 +2,15 @@
 using DuongTruong.IdentityServer.Infrastructure.IdentityServer;
 using DuongTruong.IdentityServer.IntegratedTest.Fixtures;
 using DuongTruong.IdentityServer.UI.Configurations;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit.Abstractions;
 
 namespace DuongTruong.IdentityServer.IntegratedTest
 {
-    public class Test_DataSeeding : IClassFixture<IdentityServerFixture>
+    public class Test_DataSeeding : TestBase
     {
-        private readonly WebApplicationFactory<UI.Program> factory;
-
-        public Test_DataSeeding(IdentityServerFixture fixture)
+        public Test_DataSeeding(ITestOutputHelper outputHelper, IdentityServerFactory factory) : base(outputHelper, factory)
         {
-            factory = fixture.GetIdentityServer("Development");
         }
 
         [Fact]
