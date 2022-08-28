@@ -1,7 +1,7 @@
 ﻿using DuongTruong.IdentityServer.Infrastructure;
 using DuongTruong.IdentityServer.Infrastructure.Identity;
+using DuongTruong.IdentityServer.Infrastructure.PostgreSql;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
 {
@@ -17,9 +17,8 @@ namespace DuongTruong.IdentityServer.UI.Configurations
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(
-                    connectionStrings["AspNetIdentity"],
-                    options => options.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                //options.UseDefaultSqlServer(connectionString: connectionStrings["AspNetIdentity"]);
+                options.UseDefaultNpgsql(connectionString: connectionStrings["DockerPostgreSql"]);
             });
 
             services.AddCustomIdentity(options =>
@@ -34,11 +33,10 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             {
             })
                 .AddAspNetIdentity<ApplicationUser>()
-                .AddOperationalStore<ApplicationDbContext>(options =>
+                .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        connectionStrings["AspNetIdentity"],
-                        o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                    options.ConfigureDbContext = b => b.UseDefaultNpgsql(
+                        connectionString: connectionStrings["DockerPostgreSql"]);
                 });
 
             if (isAddInMemoryConfigurationStore)
@@ -46,12 +44,13 @@ namespace DuongTruong.IdentityServer.UI.Configurations
             else
                 builder.AddConfigurationStore(options =>
                 {
-                    options.ConfigureDbContext = b => b.UseSqlServer(
-                        connectionStrings["AspNetIdentity"],
-                        o => o.MigrationsAssembly(MigrationAssemblyName.SqlServer));
+                    options.ConfigureDbContext = b => b.UseDefaultNpgsql(
+                        connectionString: connectionStrings["DockerPostgreSql"]);
                 });
 
             return services;
         }
     }
 }
+
+// dotnet ef migrations add -p ..\Infrastructure.PostgreSql\ -c PersistedGrantDbContext -o IdentityServer/PersistedGrantDb/Migrations CreatePersistedGrantDbSchema

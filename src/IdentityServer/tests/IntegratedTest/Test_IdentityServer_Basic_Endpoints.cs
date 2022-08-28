@@ -1,15 +1,15 @@
 using DuongTruong.IdentityServer.IntegratedTest.Fixtures;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Xunit.Abstractions;
 
 namespace DuongTruong.IdentityServer.IntegratedTest
 {
-    public class Test_IdentityServer_Basic_Endpoints : IClassFixture<WebAppsFixture>
+    public class Test_IdentityServer_Basic_Endpoints : TestBase
     {
-        private readonly WebApplicationFactory<UI.Program> factory;
-
-        public Test_IdentityServer_Basic_Endpoints(WebAppsFixture fixture)
+        public Test_IdentityServer_Basic_Endpoints(
+            ITestOutputHelper outputHelper, 
+            IdentityServerFactory factory) : base(outputHelper, factory)        
         {
-            factory = fixture.GetIdentityServer("Development");
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
-            var client = factory.CreateClient(IdentityServerFactory.DefaultClientOptions);
+            var client = factory.CreateDefaultClient();
 
             // Act
             var response = await client.GetAsync(url);
