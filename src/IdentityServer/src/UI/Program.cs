@@ -14,9 +14,18 @@ builder.Services.AddDefaultDependencies(builder.Configuration);
 
 var app = builder.Build();
 
-await app.WarmUpAsync(warmUpBehavior);
-if (warmUpBehavior == WarmUpBehavior.Exit)
-    return;
+if (warmUpBehavior == WarmUpBehavior.Skip)
+{
+    app.Logger.LogInformation("Skip warm up application.");
+}
+else
+{
+    app.Logger.LogInformation("Finished seeding data while warming up.");
+    await app.WarmUpAsync();
+    app.Logger.LogInformation("Warming up consumes {time}s.", stopwatch.ElapsedMilliseconds / 1000.0);
+    if (warmUpBehavior == WarmUpBehavior.Exit)
+        return;
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -42,7 +51,7 @@ app.MapRazorPages();
 
 app.Run();
 
-app.Logger.LogInformation($"App running for {stopwatch.Elapsed} s.");
+app.Logger.LogInformation("App running for {elapsed time} s.", stopwatch.Elapsed);
 
 namespace DuongTruong.IdentityServer.UI
 {
