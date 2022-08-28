@@ -111,8 +111,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: dotnet_CI
     env:
-      NAME: IdentityServer
-      PATH: src/IdentityServer/src/UI
+      PACKAGE_NAME: IdentityServer
+      PROJECT_PATH: src/IdentityServer/src/UI
         
     steps:    
     - uses: actions/checkout@v2
@@ -141,8 +141,8 @@ jobs:
     - name: Upload Publish Artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.NAME }}
-        path: ${{ env.PATH }}/publish
+        name: ${{ env.PACKAGE_NAME }}
+        path: ${{ env.PROJECT_PATH }}/publish
   
   deploy_identityserver_on_stage:
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.isCD == 'stage') 
