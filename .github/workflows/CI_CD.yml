@@ -130,7 +130,7 @@ jobs:
 
     - name: Publish
       run: |
-        dotnet publish "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ matrix.packages.path }}/publish"
+        dotnet publish "${{ env.PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.PROJECT_PATH }}/publish"
     
     - name: Generate migrations efbundle
       continue-on-error: true
