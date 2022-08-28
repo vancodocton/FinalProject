@@ -135,6 +135,7 @@ jobs:
     - name: Generate migrations efbundle
       continue-on-error: true
       run: |
+        mkdir -p "${{ env.PROJECT_PATH }}/efbundle/linux-x64"
         dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ApplicationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-AppDb" -r linux-x64
         dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ConfigurationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-ConfigDb" -r linux-x64
         dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context PersistedGrantDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-OperaDb" -r linux-x64
