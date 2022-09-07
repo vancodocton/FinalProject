@@ -6,7 +6,8 @@ on:
       - "main"
     paths:
       - '.github/workflows/CI_CD.yml'
-      - 'src/IdentityServer/**'
+      - 'src/**'
+      - 'tests/**'
       - '.netconfig'
   pull_request:
     types:
@@ -18,7 +19,8 @@ on:
       - "main"
     paths:
       - '.github/workflows/CI_CD.yml'
-      - 'src/IdentityServer/**'
+      - 'src/**'
+      - 'tests/**'
       - '.netconfig'
   workflow_dispatch:   
     inputs:
