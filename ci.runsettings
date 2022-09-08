@@ -1,0 +1,23 @@
+<RunSettings>
+	<DataCollectionRunSettings>
+		<DataCollectors>
+			<DataCollector friendlyName="XPlat Code Coverage">
+				<Configuration>
+					<Format>cobertura</Format>
+					<IncludeTestAssembly>true</IncludeTestAssembly>
+				</Configuration>
+			</DataCollector>
+		</DataCollectors>
+	</DataCollectionRunSettings>
+	<LoggerRunSettings>
+		<Loggers>
+			<Logger friendlyName="console" enabled="True">
+				<Configuration>
+					<Verbosity>detailed</Verbosity>
+				</Configuration>
+			</Logger>
+			<Logger friendlyName="html" enabled="True">
+			</Logger>
+		</Loggers>
+	</LoggerRunSettings>
+</RunSettings>
