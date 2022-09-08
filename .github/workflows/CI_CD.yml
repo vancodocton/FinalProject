@@ -87,8 +87,8 @@ jobs:
 
     - name: Test
       continue-on-error: true      
-      run: test.ps1
-      shell: powershell
+      run: ./test.ps1
+      shell: pwsh
     
     - name: Upload Test Results Artifacts
       uses: actions/upload-artifact@v2
