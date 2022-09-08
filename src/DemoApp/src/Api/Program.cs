@@ -1,7 +1,22 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        var config = builder.Configuration.GetRequiredSection(JwtBearerDefaults.AuthenticationScheme);
+        // Token issuer - IdentityServer
+        options.Authority = config.GetValue<string>("Issuer")
+            ?? throw new ArgumentNullException(nameof(JwtBearerOptions.Authority), "JwtBearer Authority cannot be null.");
+        // Disable Validate Audience temporary.
+        options.TokenValidationParameters.ValidateAudience = false;
+        // it's recommended to check the type header to avoid "JWT confusion" attacks
+        options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
+    });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,8 +32,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers()
+    .RequireAuthorization();
 
 app.Run();
