@@ -1,8 +1,19 @@
 {
   "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DockerSqlServer",
+      "dynamicId": null
+    },
     "postgresql1": {
       "type": "postgresql",
-      "connectionId": "ConnectionStrings:DockerPostgreSql"
+      "connectionId": "ConnectionStrings:DockerPostgreSql",
+      "dynamicId": null
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:MssqlLocalDb",
+      "dynamicId": null
     }
   }
 }

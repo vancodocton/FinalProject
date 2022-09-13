@@ -17,7 +17,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                //options.UseDefaultSqlServer(connectionString: connectionStrings["AspNetIdentity"]);
+                //options.UseDefaultSqlServer(connectionString: connectionStrings["DockerSqlServer"]);
                 options.UseDefaultNpgsql(connectionString: connectionStrings["DockerPostgreSql"]);
             });
 
