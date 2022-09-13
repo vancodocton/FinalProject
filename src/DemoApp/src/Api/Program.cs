@@ -36,6 +36,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/", () => "Demo API woked.")
+    .ExcludeFromDescription()
     .AllowAnonymous();
 app.MapControllers()
     .RequireAuthorization();
