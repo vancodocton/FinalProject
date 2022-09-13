@@ -20,7 +20,6 @@ if (warmUpBehavior == WarmUpBehavior.Skip)
 }
 else
 {
-    app.Logger.LogInformation("Finished seeding data while warming up.");
     await app.WarmUpAsync();
     app.Logger.LogInformation("Warming up consumes {time}s.", stopwatch.ElapsedMilliseconds / 1000.0);
     if (warmUpBehavior == WarmUpBehavior.Exit)
