@@ -29,21 +29,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoApp", "DemoApp", "{EFD7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{47BBD090-C247-440F-9A28-A7A48E9DEAAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Api", "src\DemoApp\src\Api\DemoApp.Api.csproj", "{98F4919E-5370-4EC5-B59F-35955E0290B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Api", "src\DemoApp\src\Api\DemoApp.Api.csproj", "{98F4919E-5370-4EC5-B59F-35955E0290B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Core", "src\DemoApp\src\Core\DemoApp.Core.csproj", "{A167A727-3791-4CF1-8608-513A3C6C3CE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Core", "src\DemoApp\src\Core\DemoApp.Core.csproj", "{A167A727-3791-4CF1-8608-513A3C6C3CE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Infrastructure", "src\DemoApp\src\Infrastructure\DemoApp.Infrastructure.csproj", "{599D4EEA-6CDC-4444-AC7A-F43FC3B915BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Infrastructure", "src\DemoApp\src\Infrastructure\DemoApp.Infrastructure.csproj", "{599D4EEA-6CDC-4444-AC7A-F43FC3B915BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Infrastructure.PostgreSql", "src\DemoApp\src\Infrastructure.PostgreSql\DemoApp.Infrastructure.PostgreSql.csproj", "{3D081357-5AC8-4FA9-93AB-FC5DE6FA360E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Infrastructure.PostgreSql", "src\DemoApp\src\Infrastructure.PostgreSql\DemoApp.Infrastructure.PostgreSql.csproj", "{3D081357-5AC8-4FA9-93AB-FC5DE6FA360E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Web", "src\DemoApp\src\Web\DemoApp.Web.csproj", "{BA7D6EC6-1027-48E9-8832-6C27A3E449AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Web", "src\DemoApp\src\Web\DemoApp.Web.csproj", "{BA7D6EC6-1027-48E9-8832-6C27A3E449AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3EFC7050-CA3F-4CBF-8BC0-8F42757F093A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.IntegratedTest", "src\DemoApp\tests\IntegratedTest\DemoApp.IntegratedTest.csproj", "{AF4E6B03-DBEF-4B51-9A01-E4DA00D359A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.IntegratedTest", "src\DemoApp\tests\IntegratedTest\DemoApp.IntegratedTest.csproj", "{AF4E6B03-DBEF-4B51-9A01-E4DA00D359A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.UnitTest", "src\DemoApp\tests\UnitTest\DemoApp.UnitTest.csproj", "{2026A6B4-E1EC-43E4-BABE-B87C4545A0B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.UnitTest", "src\DemoApp\tests\UnitTest\DemoApp.UnitTest.csproj", "{2026A6B4-E1EC-43E4-BABE-B87C4545A0B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
