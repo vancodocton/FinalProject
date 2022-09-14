@@ -7,9 +7,10 @@ namespace DuongTruong.IdentityServer.UI.Configurations
         [ExcludeFromCodeCoverage]
         public static IIdentityServerBuilder AddInMemoryConfigurationStore(this IIdentityServerBuilder builder)
         {
-            return builder.AddInMemoryApiScopes(IdentityServerConfigurations.ApiScopes)
-                .AddInMemoryClients(IdentityServerConfigurations.Clients)
-                .AddInMemoryIdentityResources(IdentityServerConfigurations.IdentityResources);
+            return builder.AddInMemoryIdentityResources(IdentityServerConfigurations.IdentityResources)
+                .AddInMemoryApiScopes(IdentityServerConfigurations.ApiScopes)
+                .AddInMemoryApiResources(IdentityServerConfigurations.ApiResources)
+                .AddInMemoryClients(IdentityServerConfigurations.Clients);
         }
     }
 }

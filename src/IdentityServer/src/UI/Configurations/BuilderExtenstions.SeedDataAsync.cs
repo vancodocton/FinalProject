@@ -19,6 +19,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 var rows = await dbContext.InitialConfigurationDataAsync(
                     IdentityServerConfigurations.IdentityResources,
                     IdentityServerConfigurations.ApiScopes,
+                    IdentityServerConfigurations.ApiResources,
                     IdentityServerConfigurations.Clients);
 
                 logger.LogInformation("Added {rows} row(s) to configuration database.", rows);

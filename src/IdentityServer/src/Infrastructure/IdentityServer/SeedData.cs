@@ -9,6 +9,7 @@ public static class SeedData
     public static async Task<int> InitialConfigurationDataAsync<T>(this T dbContext,
         IEnumerable<Duende.IdentityServer.Models.IdentityResource> identityResources,
         IEnumerable<Duende.IdentityServer.Models.ApiScope> apiScopes,
+        IEnumerable<Duende.IdentityServer.Models.ApiResource> apiResources,
         IEnumerable<Duende.IdentityServer.Models.Client> clients)
         where T : DbContext, IConfigurationDbContext
     {
@@ -26,6 +27,14 @@ public static class SeedData
 
             if (!isExisted)
                 await dbContext.ApiScopes.AddAsync(apiScope.ToEntity());
+        }
+
+        foreach (var apiResource in apiResources)
+        {
+            var isExisted = await dbContext.ApiResources.AnyAsync(x => x.Name == apiResource.Name);
+
+            if (!isExisted)
+                await dbContext.ApiResources.AddAsync(apiResource.ToEntity());
         }
 
         foreach (var client in clients)
