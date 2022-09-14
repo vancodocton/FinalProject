@@ -11,8 +11,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         // Token issuer - IdentityServer
         options.Authority = config.GetValue<string>("Issuer")
             ?? throw new ArgumentNullException(nameof(JwtBearerOptions.Authority), "JwtBearer Authority cannot be null.");
-        // Disable Validate Audience temporary.
-        options.TokenValidationParameters.ValidateAudience = false;
+        // Enable Validate Audiences
+        options.TokenValidationParameters.ValidAudiences = config.GetSection("Audiences").Get<string[]>();
+
         // it's recommended to check the type header to avoid "JWT confusion" attacks
         options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
     });
