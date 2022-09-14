@@ -31,11 +31,13 @@ builder.Services.AddSwaggerGen(options =>
         Version = "1.0.0-Preview-1",
     });
 
+    var issuer = builder.Configuration.GetValue<string>("Bearer:Issuer");
+
     var oidcScheme = new OpenApiSecurityScheme()
     {
         Type = SecuritySchemeType.OpenIdConnect,
         Description = "Duende Identity Server v6",
-        OpenIdConnectUrl = new("https://localhost:7011/.well-known/openid-configuration"),
+        OpenIdConnectUrl = new(issuer + "/.well-known/openid-configuration"),
     };
 
     options.AddSecurityDefinition("oidc", oidcScheme);
@@ -72,8 +74,8 @@ builder.Services.AddSwaggerGen(options =>
         {
             AuthorizationCode = new OpenApiOAuthFlow
             {
-                AuthorizationUrl = new("https://localhost:7011/connect/authorize"),
-                TokenUrl = new("https://localhost:7011/connect/token"),
+                AuthorizationUrl = new(issuer + "/connect/authorize"),
+                TokenUrl = new(issuer + "/connect/token"),
                 Scopes =
                 {
                     [OpenIdConnectScope.OpenId] = "User identifier",
