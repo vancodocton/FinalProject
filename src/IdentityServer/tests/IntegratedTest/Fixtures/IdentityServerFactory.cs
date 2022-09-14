@@ -63,7 +63,6 @@ namespace DuongTruong.IdentityServer.IntegratedTest.Fixtures
             }
         }
 
-       
 
         private static bool EnsureCreatedDatabase(IServiceProvider sp)
         {

@@ -1,5 +1,4 @@
 using DuongTruong.IdentityServer.IntegratedTest.Fixtures;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 using Xunit.Abstractions;
 

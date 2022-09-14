@@ -26,6 +26,7 @@ namespace DuongTruong.IdentityServer.IntegratedTest
                     await db.InitialConfigurationDataAsync(
                         IdentityServerConfigurations.IdentityResources,
                         IdentityServerConfigurations.ApiScopes,
+                        IdentityServerConfigurations.ApiResources,
                         IdentityServerConfigurations.Clients);
 
                     //var client = db.Clients.First();
