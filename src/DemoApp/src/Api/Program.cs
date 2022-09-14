@@ -59,6 +59,53 @@ builder.Services.AddSwaggerGen(options =>
             }
         },
     });
+
+    // Add oauth2Scheme for Swagger v2.0
+    var oauth2Scheme = new OpenApiSecurityScheme()
+    {
+        Type = SecuritySchemeType.OAuth2,
+        Scheme = "Bearer",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Flows = new OpenApiOAuthFlows
+        {
+            AuthorizationCode = new OpenApiOAuthFlow
+            {
+                AuthorizationUrl = new("https://localhost:7011/connect/authorize"),
+                TokenUrl = new("https://localhost:7011/connect/token"),
+                Scopes =
+                {
+                    [OpenIdConnectScope.OpenId] = "User identifier",
+                    [OpenIdConnectScope.OpenIdProfile] = "User identifier and profile",
+                    ["urn:demoapi.read"] = "urn:demoapi.read",
+                    ["urn:demoapi.write"] = "urn:demoapi.write",
+                },
+            }
+        },
+    };
+
+    options.AddSecurityDefinition("oauth2", oauth2Scheme);
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new ()
+            {
+                Reference = new()
+                {
+                    Id = "oauth2",
+                    Type = ReferenceType.SecurityScheme,
+                },
+            },
+            new string[]
+            {
+                OpenIdConnectScope.OpenId,
+                "urn:demoapi.read",
+                "urn:demoapi.write",
+            }
+        },
+    });
 });
 
 var app = builder.Build();
@@ -72,10 +119,17 @@ if (app.Environment.IsDevelopment())
         options.RouteTemplate = "swagger/{documentName}/openapi.json";
         options.SerializeAsV2 = false;
     });
+    // Swagger v2
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "swagger/{documentName}/swagger.json";
+        options.SerializeAsV2 = true;
+    });
     app.UseSwaggerUI(options =>
     {
         // config OAS v3 and Swagger v2 endpoints
         options.SwaggerEndpoint("v1.0.0-Preview-1/openapi.json", "DuongTruong.DemoApp.Api.v1.0.0-Preview-1.OAS-v3");
+        options.SwaggerEndpoint("v1.0.0-Preview-1/swagger.json", "DuongTruong.DemoApp.Api.v1.0.0-Preview-1.Swagger-v2");
 
         options.OAuthUsePkce();
         options.OAuthClientId("demoweb");
