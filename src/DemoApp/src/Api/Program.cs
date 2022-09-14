@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,15 +22,72 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1.0.0-Preview-1", new()
+    {
+        Title = "DuongTruong DemoApp Api v0.1.0-Preview-1",
+        Description = "DuongTruong DemoApp Api, version 1.0.0-Preview-1",
+        Version = "1.0.0-Preview-1",
+    });
+
+    var oidcScheme = new OpenApiSecurityScheme()
+    {
+        Type = SecuritySchemeType.OpenIdConnect,
+        Description = "Duende Identity Server v6",
+        OpenIdConnectUrl = new("https://localhost:7011/.well-known/openid-configuration"),
+    };
+
+    options.AddSecurityDefinition("oidc", oidcScheme);
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new ()
+            {
+                Reference = new()
+                {
+                    Id = "oidc",
+                    Type = ReferenceType.SecurityScheme,
+                },
+            },
+            new string[]
+            {
+                "openid",
+                "urn:demoapi.read",
+                "urn:demoapi.write",
+            }
+        },
+    });
+});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // OAS v3
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "swagger/{documentName}/openapi.json";
+        options.SerializeAsV2 = false;
+    });
+    app.UseSwaggerUI(options =>
+    {
+        // config OAS v3 and Swagger v2 endpoints
+        options.SwaggerEndpoint("v1.0.0-Preview-1/openapi.json", "DuongTruong.DemoApp.Api.v1.0.0-Preview-1.OAS-v3");
+
+        options.OAuthUsePkce();
+        options.OAuthClientId("demoweb");
+        options.OAuthClientSecret("secret");
+        options.OAuthScopes(new string[]
+        {
+            "openid",
+            "urn:demoapi.read",
+            "urn:demoapi.write",
+        });
+        options.ShowExtensions();
+    });
 }
 
 app.UseHttpsRedirection();
