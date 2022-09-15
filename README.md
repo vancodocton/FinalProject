@@ -1,4 +1,5 @@
-# FinalProject
+# Final Project
+[![CodeQL](https://github.com/vancodocton/FinalProject/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/vancodocton/FinalProject/actions/workflows/codeql-analysis.yml) [![CI CD FinalProject-DemoApi](https://github.com/vancodocton/FinalProject/actions/workflows/FinalProject-DemoApi.yml/badge.svg)](https://github.com/vancodocton/FinalProject/actions/workflows/FinalProject-DemoApi.yml) [![IdentityServer CI CD workflows](https://github.com/vancodocton/FinalProject/actions/workflows/CI_CD.yml/badge.svg)](https://github.com/vancodocton/FinalProject/actions/workflows/CI_CD.yml)
 
 # dotnet-ef CLI example
 ```
