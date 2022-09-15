@@ -1,12 +1,28 @@
 {
   "dependencies": {
+    "mssql1": {
+      "containerPorts": "1433:1433",
+      "secretStore": null,
+      "containerName": "mssql",
+      "containerImage": "mcr.microsoft.com/mssql/server:2019-latest",
+      "type": "mssql.container",
+      "connectionId": "ConnectionStrings:DockerSqlServer",
+      "dynamicId": null
+    },
     "postgresql1": {
       "containerPorts": "5432:5432",
       "secretStore": null,
       "containerName": "postgresql",
       "containerImage": "postgres",
       "type": "postgresql.container",
-      "connectionId": "ConnectionStrings:DockerPostgreSql"
+      "connectionId": "ConnectionStrings:DockerPostgreSql",
+      "dynamicId": null
+    },
+    "mssql2": {
+      "secretStore": null,
+      "type": "mssql.local",
+      "connectionId": "ConnectionStrings:MssqlLocalDb",
+      "dynamicId": null
     }
   }
 }

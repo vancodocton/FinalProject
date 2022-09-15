@@ -1,5 +1,4 @@
-﻿using DuongTruong.IdentityServer.UI.Utils;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 namespace DuongTruong.IdentityServer.UI.Configurations
 {

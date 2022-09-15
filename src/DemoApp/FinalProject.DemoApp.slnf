@@ -1,0 +1,18 @@
+{
+  "solution": {
+    "path": "..\\..\\FinalProject.sln",
+    "projects": [
+      "src\\DemoApp\\src\\Api\\DemoApp.Api.csproj",
+      "src\\DemoApp\\src\\Core\\DemoApp.Core.csproj",
+      "src\\DemoApp\\src\\Infrastructure.PostgreSql\\DemoApp.Infrastructure.PostgreSql.csproj",
+      "src\\DemoApp\\src\\Infrastructure\\DemoApp.Infrastructure.csproj",
+      "src\\DemoApp\\src\\Web\\DemoApp.Web.csproj",
+      "src\\DemoApp\\tests\\IntegratedTest\\DemoApp.IntegratedTest.csproj",
+      "src\\DemoApp\\tests\\UnitTest\\DemoApp.UnitTest.csproj",
+      "src\\IdentityServer\\src\\Core\\IdentityServer.Core.csproj",
+      "src\\IdentityServer\\src\\Infrastructure.PostgreSql\\IdentityServer.Infrastructure.PostgreSql.csproj",
+      "src\\IdentityServer\\src\\Infrastructure\\IdentityServer.Infrastructure.csproj",
+      "src\\IdentityServer\\src\\UI\\IdentityServer.UI.csproj"
+    ]
+  }
+}

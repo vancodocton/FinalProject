@@ -17,7 +17,7 @@ namespace DuongTruong.IdentityServer.UI.Configurations
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                //options.UseDefaultSqlServer(connectionString: connectionStrings["AspNetIdentity"]);
+                //options.UseDefaultSqlServer(connectionString: connectionStrings["DockerSqlServer"]);
                 options.UseDefaultNpgsql(connectionString: connectionStrings["DockerPostgreSql"]);
             });
 
@@ -29,8 +29,9 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
-            var builder = services.AddIdentityServer(options =>
+            var identityServerBuilder = services.AddIdentityServer(options =>
             {
+                configuration.GetSection("IdentityServer:Events").Bind(options.Events);
             })
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddOperationalStore(options =>
@@ -40,9 +41,9 @@ namespace DuongTruong.IdentityServer.UI.Configurations
                 });
 
             if (isAddInMemoryConfigurationStore)
-                builder.AddInMemoryConfigurationStore();
+                identityServerBuilder.AddInMemoryConfigurationStore();
             else
-                builder.AddConfigurationStore(options =>
+                identityServerBuilder.AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = b => b.UseDefaultNpgsql(
                         connectionString: connectionStrings["DockerPostgreSql"]);

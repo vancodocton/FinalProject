@@ -1,5 +1,4 @@
 using DuongTruong.IdentityServer.IntegratedTest.Fixtures;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit.Abstractions;
 
 namespace DuongTruong.IdentityServer.IntegratedTest
@@ -7,8 +6,8 @@ namespace DuongTruong.IdentityServer.IntegratedTest
     public class Test_IdentityServer_Basic_Endpoints : TestBase
     {
         public Test_IdentityServer_Basic_Endpoints(
-            ITestOutputHelper outputHelper, 
-            IdentityServerFactory factory) : base(outputHelper, factory)        
+            ITestOutputHelper outputHelper,
+            IdentityServerFactory factory) : base(outputHelper, factory)
         {
         }
 

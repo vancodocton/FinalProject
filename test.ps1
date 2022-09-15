@@ -1,0 +1,1 @@
+dotnet test . --configuration Release --no-build --settings ci.runsettings --verbosity normal
