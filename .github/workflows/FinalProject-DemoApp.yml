@@ -1,4 +1,4 @@
-name: CI CD FinalProject-DemoApi
+name: CI CD FinalProject-DemoApp
 on:
   push:
     branches:
@@ -17,6 +17,18 @@ on:
     paths-ignore:
       - '**.md'
       - 'src/IdentityServer/**'
+  workflow_dispatch:   
+    inputs:
+      isCD:
+        description: "Run CD:"
+        required: true
+        default: 'no'
+        type: choice
+        options:
+          - 'no'
+          - 'publish'
+          - 'stage'
+          - 'production'
 
 env:
   AZURE_WEBAPP_NAME: FinalProject-DemoApi
@@ -43,6 +55,7 @@ jobs:
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
+      if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.isCD == 'stage') 
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.FinalProject_DemoApi_FFFF }}
