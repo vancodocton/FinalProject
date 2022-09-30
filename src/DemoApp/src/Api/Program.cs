@@ -154,7 +154,6 @@ app.UseAuthorization();
 app.MapGet("/", () => "Demo API worked.")
     .ExcludeFromDescription()
     .AllowAnonymous();
-app.MapControllers()
-    .RequireAuthorization();
+app.MapControllers();
 
 app.Run();
