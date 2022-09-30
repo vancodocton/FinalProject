@@ -3,7 +3,7 @@ using Duende.IdentityServer.Models;
 
 namespace DuongTruong.IdentityServer.UI.Configurations;
 
-public static partial class IdentityServerConfigurations
+public static class IdentityServerConfigurations
 {
     public static IEnumerable<IdentityResource> IdentityResources =>
         new List<IdentityResource>()
@@ -18,8 +18,8 @@ public static partial class IdentityServerConfigurations
         {
             Scopes =
             {
-                "urn:demoapi.write",
-                "urn:demoapi.read",
+                "urn:demoapi:write",
+                "urn:demoapi:read",
             },
             // Expected to enable Resource Isolation by set RequireResourceIndicator = true
             ShowInDiscoveryDocument = true,
@@ -29,9 +29,9 @@ public static partial class IdentityServerConfigurations
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>()
         {
-            new ApiScope(name: "api1", displayName: "MyAPI"),
-            new ApiScope(name: "urn:demoapi.read", displayName: "Demo API Read"),
-            new ApiScope(name: "urn:demoapi.write", displayName: "Demo API Write"),
+            new ApiScope(name: "api1", displayName: "My API"),
+            new ApiScope(name: "urn:demoapi:read", displayName: "Demo API Read Permission"),
+            new ApiScope(name: "urn:demoapi:write", displayName: "Demo API Write Permission"),
         };
 
     public static IEnumerable<Client> Clients =>
@@ -72,9 +72,9 @@ public static partial class IdentityServerConfigurations
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "urn:demoapi",
-                    "urn:demoapi.read",
-                    "urn:demoapi.write",
+                    
+                    "urn:demoapi:read",
+                    "urn:demoapi:write",
                     "api1"
                 },
             },
@@ -99,7 +99,7 @@ public static partial class IdentityServerConfigurations
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "api1",
-                }
+                },
             },
         };
 }

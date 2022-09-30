@@ -56,8 +56,8 @@ builder.Services.AddSwaggerGen(options =>
             new string[]
             {
                 "openid",
-                "urn:demoapi.read",
-                "urn:demoapi.write",
+                "urn:demoapi:read",
+                "urn:demoapi:write",
             }
         },
     });
@@ -80,8 +80,8 @@ builder.Services.AddSwaggerGen(options =>
                 {
                     [OpenIdConnectScope.OpenId] = "User identifier",
                     [OpenIdConnectScope.OpenIdProfile] = "User identifier and profile",
-                    ["urn:demoapi.read"] = "urn:demoapi.read",
-                    ["urn:demoapi.write"] = "urn:demoapi.write",
+                    ["urn:demoapi:read"] = "urn:demoapi:read",
+                    ["urn:demoapi:write"] = "urn:demoapi:write",
                 },
             }
         },
@@ -103,8 +103,8 @@ builder.Services.AddSwaggerGen(options =>
             new string[]
             {
                 OpenIdConnectScope.OpenId,
-                "urn:demoapi.read",
-                "urn:demoapi.write",
+                "urn:demoapi:read",
+                "urn:demoapi:write",
             }
         },
     });
@@ -139,8 +139,8 @@ if (app.Environment.IsDevelopment())
         options.OAuthScopes(new string[]
         {
             "openid",
-            "urn:demoapi.read",
-            "urn:demoapi.write",
+            "urn:demoapi:read",
+            "urn:demoapi:write",
         });
         options.ShowExtensions();
     });
@@ -151,7 +151,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapGet("/", () => "Demo API woked.")
+app.MapGet("/", () => "Demo API worked.")
     .ExcludeFromDescription()
     .AllowAnonymous();
 app.MapControllers()

@@ -24,7 +24,7 @@ builder.Services.AddAuthentication(options =>
         options.SaveTokens = true;
 
         // implict add openid profile scope // skip adding
-        options.Scope.Add("demoapi");
+        options.Scope.Add("urn:demoapi.read");
         options.Scope.Add(OpenIdConnectScope.OfflineAccess);
     });
 var app = builder.Build();
