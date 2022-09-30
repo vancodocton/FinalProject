@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DuongTruong.IdentityServer.Infrastructure
+namespace DuongTruong.IdentityServer.Infrastructure;
+
+public static class Dependencies
 {
-    public static class Dependencies
+    public static IdentityBuilder AddCustomIdentity(this IServiceCollection services, Action<IdentityOptions> setupAction)
     {
-        public static IdentityBuilder AddCustomIdentity(this IServiceCollection services, Action<IdentityOptions> setupAction)
-        {
-            return services.AddIdentity<ApplicationUser, ApplicationRole>(setupAction)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-        }
+        return services.AddIdentity<ApplicationUser, ApplicationRole>(setupAction)
+            .AddEntityFrameworkStores<ApplicationDbContext>();
     }
 }

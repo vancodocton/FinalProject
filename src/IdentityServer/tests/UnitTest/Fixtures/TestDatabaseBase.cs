@@ -1,33 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DuongTruong.IdentityServer.UnitTest.Fixtures
+namespace DuongTruong.IdentityServer.UnitTest.Fixtures;
+
+public abstract class TestDatabaseBase<T> where T : DbContext
 {
-    public abstract class TestDatabaseBase<T> where T : DbContext
+    public abstract DbContextOptions<T> Options { get; protected set; }
+
+    public abstract T CreateContext();
+
+    protected virtual void EnsureDatabaseCreated(ref object _lock, ref bool isDatabaseInitialized)
     {
-        public abstract DbContextOptions<T> Options { get; protected set; }
-
-        public abstract T CreateContext();
-
-        protected virtual void EnsureDatabaseCreated(ref object _lock, ref bool isDatabaseInitialized)
+        lock (_lock)
         {
-            lock (_lock)
+            if (!isDatabaseInitialized)
             {
-                if (!isDatabaseInitialized)
+                using (var context = CreateContext())
                 {
-                    using (var context = CreateContext())
-                    {
-                        context.Database.EnsureDeleted();
+                    context.Database.EnsureDeleted();
 
-                        if (context.Database.IsRelational())
-                            context.Database.Migrate();
-                        else
-                            context.Database.EnsureCreated();
+                    if (context.Database.IsRelational())
+                        context.Database.Migrate();
+                    else
+                        context.Database.EnsureCreated();
 
-                        context.SaveChanges();
-                    }
-
-                    isDatabaseInitialized = true;
+                    context.SaveChanges();
                 }
+
+                isDatabaseInitialized = true;
             }
         }
     }

@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace DuongTruong.IdentityServer.Infrastructure.Identity
-{
-    public class ApplicationUser : IdentityUser
-    {
-        public ApplicationUser() : base()
-        {
-        }
+namespace DuongTruong.IdentityServer.Infrastructure.Identity;
 
-        public ApplicationUser(string userName) : base(userName)
-        {
-        }
+public class ApplicationUser : IdentityUser
+{
+    public ApplicationUser() : base()
+    {
+    }
+
+    public ApplicationUser(string userName) : base(userName)
+    {
     }
 }
