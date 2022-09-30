@@ -22,4 +22,8 @@
     </PackageReference>    
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Core\IdentityServer.Core.csproj" />
+  </ItemGroup>
+
 </Project>

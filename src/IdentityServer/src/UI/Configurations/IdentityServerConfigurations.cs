@@ -1,5 +1,7 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using DuongTruong.IdentityServer.Core.Helpers;
+using DuongTruong.IdentityServer.Core.Options;
 
 namespace DuongTruong.IdentityServer.UI.Configurations;
 
@@ -10,20 +12,26 @@ public static class IdentityServerConfigurations
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResource()
+            {
+                Name = RbacDefaults.Scope,
+                DisplayName = "Your user roles",
+                Required = true,
+                UserClaims =
+                {
+                    RbacDefaults.RoleClaim,
+                },
+            }
         };
 
     public static IEnumerable<ApiResource> ApiResources => new List<ApiResource>()
     {
-        new ApiResource("urn:demoapi", "DemoApp Api")
-        {
-            Scopes =
-            {
+        new ApiResourceBuilder("urn:demoapi", "Demo Api Resource")
+            .EnableRbac()
+            .AllowScopes(
                 "urn:demoapi:write",
-                "urn:demoapi:read",
-            },
-            // Expected to enable Resource Isolation by set RequireResourceIndicator = true
-            ShowInDiscoveryDocument = true,
-        }
+                "urn:demoapi:read")
+            .Build(),
     };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -68,11 +76,11 @@ public static class IdentityServerConfigurations
 
                 AllowOfflineAccess = true,
 
-                AllowedScopes = new List<string>
+                AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    
+                    RbacDefaults.Scope,
                     "urn:demoapi:read",
                     "urn:demoapi:write",
                     "api1"
@@ -94,7 +102,7 @@ public static class IdentityServerConfigurations
 
                 AllowOfflineAccess = true,
 
-                AllowedScopes = new List<string>
+                AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,

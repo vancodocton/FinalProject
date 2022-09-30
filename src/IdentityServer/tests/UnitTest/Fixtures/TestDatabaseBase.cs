@@ -1,5 +1,4 @@
-﻿using DuongTruong.IdentityServer.Infrastructure.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DuongTruong.IdentityServer.UnitTest.Fixtures
 {
