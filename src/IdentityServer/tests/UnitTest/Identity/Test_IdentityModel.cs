@@ -1,5 +1,4 @@
 ﻿using DuongTruong.IdentityServer.Infrastructure.Identity;
-using DuongTruong.IdentityServer.UnitTest.Fixtures;
 
 namespace DuongTruong.IdentityServer.UnitTest.Identity
 {

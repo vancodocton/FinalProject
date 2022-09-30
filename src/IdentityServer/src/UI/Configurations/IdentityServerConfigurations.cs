@@ -1,37 +1,45 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using DuongTruong.IdentityServer.Core.Helpers;
+using DuongTruong.IdentityServer.Core.Options;
 
 namespace DuongTruong.IdentityServer.UI.Configurations;
 
-public static partial class IdentityServerConfigurations
+public static class IdentityServerConfigurations
 {
     public static IEnumerable<IdentityResource> IdentityResources =>
         new List<IdentityResource>()
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
+            new IdentityResource()
+            {
+                Name = RbacDefaults.Scope,
+                DisplayName = "Your user roles",
+                Required = true,
+                UserClaims =
+                {
+                    RbacDefaults.RoleClaim,
+                },
+            }
         };
 
     public static IEnumerable<ApiResource> ApiResources => new List<ApiResource>()
     {
-        new ApiResource("urn:demoapi", "DemoApp Api")
-        {
-            Scopes =
-            {
-                "urn:demoapi.write",
-                "urn:demoapi.read",
-            },
-            // Expected to enable Resource Isolation by set RequireResourceIndicator = true
-            ShowInDiscoveryDocument = true,
-        }
+        new ApiResourceBuilder("urn:demoapi", "Demo Api Resource")
+            .EnableRbac()
+            .AllowScopes(
+                "urn:demoapi:write",
+                "urn:demoapi:read")
+            .Build(),
     };
 
     public static IEnumerable<ApiScope> ApiScopes =>
         new List<ApiScope>()
         {
-            new ApiScope(name: "api1", displayName: "MyAPI"),
-            new ApiScope(name: "urn:demoapi.read", displayName: "Demo API Read"),
-            new ApiScope(name: "urn:demoapi.write", displayName: "Demo API Write"),
+            new ApiScope(name: "api1", displayName: "My API"),
+            new ApiScope(name: "urn:demoapi:read", displayName: "Demo API Read Permission"),
+            new ApiScope(name: "urn:demoapi:write", displayName: "Demo API Write Permission"),
         };
 
     public static IEnumerable<Client> Clients =>
@@ -68,13 +76,13 @@ public static partial class IdentityServerConfigurations
 
                 AllowOfflineAccess = true,
 
-                AllowedScopes = new List<string>
+                AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
-                    "urn:demoapi",
-                    "urn:demoapi.read",
-                    "urn:demoapi.write",
+                    RbacDefaults.Scope,
+                    "urn:demoapi:read",
+                    "urn:demoapi:write",
                     "api1"
                 },
             },
@@ -94,12 +102,12 @@ public static partial class IdentityServerConfigurations
 
                 AllowOfflineAccess = true,
 
-                AllowedScopes = new List<string>
+                AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "api1",
-                }
+                },
             },
         };
 }

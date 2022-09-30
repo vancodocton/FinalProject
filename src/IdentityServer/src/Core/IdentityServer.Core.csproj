@@ -8,4 +8,8 @@
     <RootNamespace>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Duende.IdentityServer.Storage" Version="6.1.5" />
+  </ItemGroup>
+
 </Project>

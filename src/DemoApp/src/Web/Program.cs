@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,9 +25,13 @@ builder.Services.AddAuthentication(options =>
 
         options.SaveTokens = true;
 
-        // implict add openid profile scope // skip adding
-        options.Scope.Add("demoapi");
+        // implicit add openid profile scope // skip adding
+        options.Scope.Add("roles");
+        options.Scope.Add("urn:demoapi.read");
         options.Scope.Add(OpenIdConnectScope.OfflineAccess);
+        
+        options.ClaimActions.MapJsonKey(ClaimTypes.Role, "role");
+        options.GetClaimsFromUserInfoEndpoint = true;
     });
 var app = builder.Build();
 

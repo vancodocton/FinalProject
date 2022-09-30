@@ -1,6 +1,5 @@
 ﻿using DuongTruong.IdentityServer.Infrastructure.Identity;
 using DuongTruong.IdentityServer.Infrastructure.PostgreSql;
-using DuongTruong.IdentityServer.IntegratedTest.Fixtures;
 using Microsoft.EntityFrameworkCore;
 
 namespace DuongTruong.IdentityServer.UnitTest.Fixtures
