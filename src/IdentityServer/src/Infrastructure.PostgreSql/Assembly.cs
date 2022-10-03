@@ -1,9 +1,8 @@
-﻿namespace DuongTruong.IdentityServer.Infrastructure.PostgreSql
+﻿namespace DuongTruong.IdentityServer.Infrastructure.PostgreSql;
+
+public class Assembly
 {
-    public class Assembly
-    {
-        public static string Name =>
-            typeof(Assembly).Assembly.GetName().Name
-            ?? throw new ArgumentNullException(nameof(Name));
-    }
+    public static string Name =>
+        typeof(Assembly).Assembly.GetName().Name
+        ?? throw new ArgumentNullException(nameof(Name));
 }

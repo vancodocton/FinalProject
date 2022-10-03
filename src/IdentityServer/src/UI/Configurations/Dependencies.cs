@@ -3,54 +3,53 @@ using DuongTruong.IdentityServer.Infrastructure.Identity;
 using DuongTruong.IdentityServer.Infrastructure.PostgreSql;
 using Microsoft.AspNetCore.Identity;
 
-namespace DuongTruong.IdentityServer.UI.Configurations
+namespace DuongTruong.IdentityServer.UI.Configurations;
+
+public static class Dependencies
 {
-    public static class Dependencies
+    static readonly bool isAddInMemoryConfigurationStore = false;
+
+    public static IServiceCollection AddDefaultDependencies(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        static readonly bool isAddInMemoryConfigurationStore = false;
+        var connectionStrings = configuration.GetSection("ConnectionStrings");
 
-        public static IServiceCollection AddDefaultDependencies(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
-            var connectionStrings = configuration.GetSection("ConnectionStrings");
+            //options.UseDefaultSqlServer(connectionString: connectionStrings["DockerSqlServer"]);
+            options.UseDefaultNpgsql(connectionString: connectionStrings["DockerPostgreSql"]);
+        });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddCustomIdentity(options =>
+        {
+            options.Stores.MaxLengthForKeys = 128;
+            options.SignIn.RequireConfirmedAccount = true;
+        })
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
+
+        var identityServerBuilder = services.AddIdentityServer(options =>
+        {
+            configuration.GetSection("IdentityServer:Events").Bind(options.Events);
+        })
+            .AddAspNetIdentity<ApplicationUser>()
+            .AddOperationalStore(options =>
             {
-                //options.UseDefaultSqlServer(connectionString: connectionStrings["DockerSqlServer"]);
-                options.UseDefaultNpgsql(connectionString: connectionStrings["DockerPostgreSql"]);
+                options.ConfigureDbContext = b => b.UseDefaultNpgsql(
+                    connectionString: connectionStrings["DockerPostgreSql"]);
             });
 
-            services.AddCustomIdentity(options =>
+        if (isAddInMemoryConfigurationStore)
+            identityServerBuilder.AddInMemoryConfigurationStore();
+        else
+            identityServerBuilder.AddConfigurationStore(options =>
             {
-                options.Stores.MaxLengthForKeys = 128;
-                options.SignIn.RequireConfirmedAccount = true;
-            })
-                .AddDefaultTokenProviders()
-                .AddDefaultUI();
+                options.ConfigureDbContext = b => b.UseDefaultNpgsql(
+                    connectionString: connectionStrings["DockerPostgreSql"]);
+            });
 
-            var identityServerBuilder = services.AddIdentityServer(options =>
-            {
-                configuration.GetSection("IdentityServer:Events").Bind(options.Events);
-            })
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseDefaultNpgsql(
-                        connectionString: connectionStrings["DockerPostgreSql"]);
-                });
-
-            if (isAddInMemoryConfigurationStore)
-                identityServerBuilder.AddInMemoryConfigurationStore();
-            else
-                identityServerBuilder.AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = b => b.UseDefaultNpgsql(
-                        connectionString: connectionStrings["DockerPostgreSql"]);
-                });
-
-            return services;
-        }
+        return services;
     }
 }
 

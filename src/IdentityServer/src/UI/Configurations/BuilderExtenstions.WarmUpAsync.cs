@@ -1,21 +1,20 @@
 ﻿using System.Diagnostics;
 
-namespace DuongTruong.IdentityServer.UI.Configurations
+namespace DuongTruong.IdentityServer.UI.Configurations;
+
+public static partial class BuilderExtenstions
 {
-    public static partial class BuilderExtenstions
+    public static async Task<IHost> WarmUpAsync(this IHost host)
     {
-        public static async Task<IHost> WarmUpAsync(this IHost host)
-        {
-            using var scope = host.Services.CreateScope();
+        using var scope = host.Services.CreateScope();
 
-            var stopwatch = scope.ServiceProvider.GetRequiredService<Stopwatch>();
+        var stopwatch = scope.ServiceProvider.GetRequiredService<Stopwatch>();
 
-            // seed data
-            Program.SemaphoreSlim.Wait();
-            _ = await scope.ServiceProvider.SeedDataAsync();
-            Program.SemaphoreSlim.Release();
+        // seed data
+        Program.SemaphoreSlim.Wait();
+        _ = await scope.ServiceProvider.SeedDataAsync();
+        Program.SemaphoreSlim.Release();
 
-            return host;
-        }
+        return host;
     }
 }

@@ -5,38 +5,38 @@ using DuongTruong.IdentityServer.UI.Configurations;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 
-namespace DuongTruong.IdentityServer.IntegratedTest
+namespace DuongTruong.IdentityServer.IntegratedTest;
+
+public class Test_DataSeeding : TestBase
 {
-    public class Test_DataSeeding : TestBase
+    public Test_DataSeeding(IdentityServerFactory factory, ITestOutputHelper outputHelper)
+        : base(factory, outputHelper)
     {
-        public Test_DataSeeding(ITestOutputHelper outputHelper, IdentityServerFactory factory) : base(outputHelper, factory)
-        {
-        }
+    }
 
-        [Fact]
-        public async Task Test_SeedDataConfigurationDbAsync()
+    [Fact]
+    public async Task Test_SeedDataConfigurationDbAsync()
+    {
+        using (var serviceScope = factory.Services.CreateScope())
         {
-            using (var serviceScope = factory.Services.CreateScope())
+            var sp = serviceScope.ServiceProvider;
+            var db = sp.GetService<ConfigurationDbContext>();
+
+            if (db != null)
             {
-                var sp = serviceScope.ServiceProvider;
-                var db = sp.GetService<ConfigurationDbContext>();
+                await db.InitialConfigurationDataAsync(
+                    IdentityServerConfigurations.IdentityResources,
+                    IdentityServerConfigurations.ApiScopes,
+                    IdentityServerConfigurations.ApiResources,
+                    IdentityServerConfigurations.Clients);
 
-                if (db != null)
-                {
-                    await db.InitialConfigurationDataAsync(
-                        IdentityServerConfigurations.IdentityResources,
-                        IdentityServerConfigurations.ApiScopes,
-                        IdentityServerConfigurations.ApiResources,
-                        IdentityServerConfigurations.Clients);
+                //var client = db.Clients.First();
+                //client.AllowOfflineAccess = !client.AllowOfflineAccess;
 
-                    //var client = db.Clients.First();
-                    //client.AllowOfflineAccess = !client.AllowOfflineAccess;
-
-                    //db.SaveChanges();
-                }
+                //db.SaveChanges();
             }
-
-            var client1 = factory.CreateDefaultClient();
         }
+
+        _ = factory.CreateDefaultClient();
     }
 }

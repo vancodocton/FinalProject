@@ -1,6 +1,5 @@
-﻿namespace DuongTruong.IdentityServer.UI.Configurations
+﻿namespace DuongTruong.IdentityServer.UI.Configurations;
+
+public static partial class BuilderExtenstions
 {
-    public static partial class BuilderExtenstions
-    {
-    }
 }

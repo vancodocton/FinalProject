@@ -1,19 +1,16 @@
-﻿namespace DuongTruong.IdentityServer.UI.Utils
+﻿namespace DuongTruong.IdentityServer.UI.Utils;
+
+public class Role
 {
+    public const string Default = "User";
 
-    public class Role
+    public const string Admin = "Admin";
+
+    public static IReadOnlyList<string> ToList() => new List<string>()
     {
-        public const string Default = "User";
+        Default,
+        Admin,
+    };
 
-        public const string Admin = "Admin";
-
-        public static IReadOnlyList<string> ToList() => new List<string>()
-        {
-            Default,
-            Admin,
-        };
-
-        public static string[] ToArray() => ToList().ToArray();
-    }
-
+    public static string[] ToArray() => ToList().ToArray();
 }

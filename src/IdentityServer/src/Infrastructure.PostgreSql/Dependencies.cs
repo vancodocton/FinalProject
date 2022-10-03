@@ -1,31 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DuongTruong.IdentityServer.Infrastructure.PostgreSql
+namespace DuongTruong.IdentityServer.Infrastructure.PostgreSql;
+
+public static class Dependencies
 {
-    public static class Dependencies
+    public static DbContextOptionsBuilder<T> UseDefaultNpgsql<T>(
+        this DbContextOptionsBuilder<T> optionsBuilder,
+        string connectionString) where T : DbContext
     {
-        public static DbContextOptionsBuilder<T> UseDefaultNpgsql<T>(
-            this DbContextOptionsBuilder<T> optionsBuilder,
-            string connectionString) where T : DbContext
+        optionsBuilder.UseNpgsql(connectionString, options =>
         {
-            optionsBuilder.UseNpgsql(connectionString, options =>
-            {
-                options.MigrationsAssembly(Assembly.Name);
-            });
+            options.MigrationsAssembly(Assembly.Name);
+        });
 
-            return optionsBuilder;
-        }
+        return optionsBuilder;
+    }
 
-        public static DbContextOptionsBuilder UseDefaultNpgsql(
-            this DbContextOptionsBuilder optionsBuilder,
-            string connectionString)
+    public static DbContextOptionsBuilder UseDefaultNpgsql(
+        this DbContextOptionsBuilder optionsBuilder,
+        string connectionString)
+    {
+        optionsBuilder.UseNpgsql(connectionString, options =>
         {
-            optionsBuilder.UseNpgsql(connectionString, options =>
-            {
-                options.MigrationsAssembly(Assembly.Name);
-            });
+            options.MigrationsAssembly(Assembly.Name);
+        });
 
-            return optionsBuilder;
-        }
+        return optionsBuilder;
     }
 }
