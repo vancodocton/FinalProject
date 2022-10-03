@@ -17,9 +17,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
-      <PrivateAssets>build; native; contentfiles; analyzers; buildtransitive</PrivateAssets>
+      <PrivateAssets>runtime; build; native; contentfiles; analyzers</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>    
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
