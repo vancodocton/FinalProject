@@ -9,7 +9,8 @@ namespace DuongTruong.IdentityServer.IntegratedTest;
 
 public class Test_DataSeeding : TestBase
 {
-    public Test_DataSeeding(ITestOutputHelper outputHelper, IdentityServerFactory factory) : base(outputHelper, factory)
+    public Test_DataSeeding(IdentityServerFactory factory, ITestOutputHelper outputHelper)
+        : base(factory, outputHelper)
     {
     }
 

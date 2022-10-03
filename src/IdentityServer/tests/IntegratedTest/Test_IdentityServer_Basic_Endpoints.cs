@@ -6,8 +6,9 @@ namespace DuongTruong.IdentityServer.IntegratedTest;
 public class Test_IdentityServer_Basic_Endpoints : TestBase
 {
     public Test_IdentityServer_Basic_Endpoints(
-        ITestOutputHelper outputHelper,
-        IdentityServerFactory factory) : base(outputHelper, factory)
+        IdentityServerFactory identityServerFactory,
+        ITestOutputHelper outputHelper)
+        : base(identityServerFactory, outputHelper)
     {
     }
 
