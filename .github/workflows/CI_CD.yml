@@ -54,20 +54,20 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-      mssql1:
-        image: mcr.microsoft.com/mssql/server:2019-latest
-        env:
-          SA_PASSWORD: myStrong(!)Password
-          ACCEPT_EULA: 'Y'
-        ports:
-          - 1433:1433
-        # Set health checks to wait until SqlServer has started
-        options: >-
-          --health-cmd "/opt/mssql-tools/bin/sqlcmd -U sa -P $SA_PASSWORD -Q 'select 1' -b -o /dev/null"
-          --health-interval 60s
-          --health-timeout 30s
-          --health-start-period 20s
-          --health-retries 3
+      #mssql1:
+      #  image: mcr.microsoft.com/mssql/server:2019-latest
+      #  env:
+      #    SA_PASSWORD: myStrong(!)Password
+      #    ACCEPT_EULA: 'Y'
+      #  ports:
+      #    - 1433:1433
+      #  # Set health checks to wait until SqlServer has started
+      #  options: >-
+      #    --health-cmd "/opt/mssql-tools/bin/sqlcmd -U sa -P $SA_PASSWORD -Q 'select 1' -b -o /dev/null"
+      #    --health-interval 60s
+      #    --health-timeout 30s
+      #    --health-start-period 20s
+      #    --health-retries 3
 
     steps:
     - uses: actions/checkout@v3
