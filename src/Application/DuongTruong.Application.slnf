@@ -1,0 +1,11 @@
+{
+  "solution": {
+    "path": "..\\..\\FinalProject.sln",
+    "projects": [
+      "src\\Application\\src\\Core\\DuongTruong.Application.Core.csproj",
+      "src\\Application\\src\\Infrastructure\\DuongTruong.Application.Infrastructure.csproj",
+      "src\\Application\\tests\\UnitTest\\DuongTruong.Application.UnitTest.csproj",
+      "src\\SharedKernel\\src\\DuongTruong.SharedKernel.csproj"
+    ]
+  }
+}
