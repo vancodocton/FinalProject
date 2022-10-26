@@ -54,7 +54,7 @@ public class EfRepository<T> : IRepository<T> where T : class
     public async Task<T> Create(T entity)
     {
         dbSet.Add(entity);
-        _ = await SaveChangesAsync();
+        if (IsAutoSaveChanges) _ = await dbContext.SaveChangesAsync();
 
         return entity;
     }
@@ -62,21 +62,22 @@ public class EfRepository<T> : IRepository<T> where T : class
     public async Task<T> Remove(T entity)
     {
         dbSet.Remove(entity);
-        await SaveChangesAsync();
+        if (IsAutoSaveChanges) _ = await dbContext.SaveChangesAsync();
 
         return entity;
     }
 
     public async Task<T> Update(T entity)
     {
-        dbSet.Remove(entity);
-        await SaveChangesAsync();
+        dbSet.Update(entity);
+        if (IsAutoSaveChanges) _ = await dbContext.SaveChangesAsync();
 
         return entity;
     }
 
     public Task<int> SaveChangesAsync()
     {
-        return IsAutoSaveChanges ? dbContext.SaveChangesAsync() : Task.FromResult(0);
+        return dbContext.SaveChangesAsync();
     }
+
 }
