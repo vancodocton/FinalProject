@@ -19,7 +19,7 @@ public class EfRepository<T> : IRepository<T> where T : class
 
     protected bool isAutoSaveChanges;
 
-    protected IQueryable<T> ApplySpecification(IQueryable<T> query, ISpecification<T> specification)
+    protected virtual IQueryable<T> ApplySpecification(IQueryable<T> query, ISpecification<T> specification)
     {
         if (specification.FilterExpression is not null)
         {
@@ -29,29 +29,29 @@ public class EfRepository<T> : IRepository<T> where T : class
         return query;
     }
 
-    public ValueTask<T?> FindByIdAsync<TKey>(TKey id)
+    public virtual ValueTask<T?> FindByIdAsync<TKey>(TKey id)
     {
         return dbSet.FindAsync(id);
     }
 
-    public Task<T?> FindBySpecAsync(ISpecification<T> specification)
+    public virtual Task<T?> FindBySpecAsync(ISpecification<T> specification)
     {
         return ApplySpecification(dbSet.AsQueryable(), specification)
             .FirstOrDefaultAsync();
     }
 
-    public Task<List<T>> GetAllAsync()
+    public virtual Task<List<T>> GetAllAsync()
     {
         return dbSet.ToListAsync();
     }
 
-    public Task<List<T>> GetAllBySpecAsync(ISpecification<T> specification)
+    public virtual Task<List<T>> GetAllBySpecAsync(ISpecification<T> specification)
     {
         return ApplySpecification(dbSet.AsQueryable(), specification)
             .ToListAsync();
     }
 
-    public async Task<T> Create(T entity)
+    public virtual async Task<T> Create(T entity)
     {
         dbSet.Add(entity);
         if (IsAutoSaveChanges) _ = await dbContext.SaveChangesAsync();
@@ -59,7 +59,7 @@ public class EfRepository<T> : IRepository<T> where T : class
         return entity;
     }
 
-    public async Task<T> Remove(T entity)
+    public virtual async Task<T> Remove(T entity)
     {
         dbSet.Remove(entity);
         if (IsAutoSaveChanges) _ = await dbContext.SaveChangesAsync();
@@ -67,7 +67,7 @@ public class EfRepository<T> : IRepository<T> where T : class
         return entity;
     }
 
-    public async Task<T> Update(T entity)
+    public virtual async Task<T> Update(T entity)
     {
         dbSet.Update(entity);
         if (IsAutoSaveChanges) _ = await dbContext.SaveChangesAsync();
@@ -75,7 +75,7 @@ public class EfRepository<T> : IRepository<T> where T : class
         return entity;
     }
 
-    public Task<int> SaveChangesAsync()
+    public virtual Task<int> SaveChangesAsync()
     {
         return dbContext.SaveChangesAsync();
     }
