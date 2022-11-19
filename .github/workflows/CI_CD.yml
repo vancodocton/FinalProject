@@ -195,7 +195,7 @@ jobs:
       name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     env:
-      AZURE_WEBAPP_NAME: FinalProject-IdentityServer
+      AZURE_WEBAPP_NAME: FinalProjectIdentity
       AZURE_WEBAPP_PACKAGE_PATH: src/IdentityServer/src/UI/publish
       AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.IdentityServer_Development_FFF }}
       AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/src/UI
