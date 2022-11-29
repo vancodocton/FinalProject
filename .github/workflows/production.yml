@@ -1,4 +1,4 @@
-name: "CI CD workflows"
+name: "IdentityServer CI/CD : Production"
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
       - synchronize
       - reopened
     branches:
-      - "main"
+      - "prod**"
     paths-ignore:
       - "**.md"
       - "src/DemoApp/**"
