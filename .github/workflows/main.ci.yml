@@ -7,8 +7,7 @@ on:
       - ready_for_review
       - synchronize
       - reopened
-    branches:
-      - "main"
+  workflow_dispatch:
 
 jobs:
   dotnet_CI:
