@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - "main"
-
+  workflow_dispatch:
+    
 jobs:
   dotnet_CI:
     name: Run CI for .NET
@@ -15,7 +16,7 @@ jobs:
     uses: ./.github/workflows/dotnet.cd.yml
     needs: [dotnet_CI]
     with:
-      github_environment: Development
+      github_environment: Development.IdentityServer
       publish_artifact_name: IdentityServer
       efbundle_artifact_name: IdentityServer.efbundle.linux-x64
     secrets:
@@ -27,7 +28,7 @@ jobs:
     uses: ./.github/workflows/dotnet.cd.yml
     needs: [dotnet_CI]
     with:
-      github_environment: Development
+      github_environment: Development.DemoApp
       publish_artifact_name: DemoApp.Api
     secrets:
       AZURE_WEBAPP_NAME: ${{ secrets.DEMOAPPAPI_NAME }}
