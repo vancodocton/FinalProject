@@ -1,4 +1,4 @@
-name: "Dotnet CI"
+name: "Dotnet CD"
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
       github_environment:
         description: The name of GitHub Environment for deployment
         type: string
-        required: true      
+        required: true
       publish_artifact_name:
         description: The name of publish artifact
         type: string
@@ -25,10 +25,6 @@ on:
         description: The XML publish profile of Azure Web App
         required: true
 
-env:
-  CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 6.0.x
-
 jobs:
   deploy:
     name: "Deploy to Azure"
@@ -36,12 +32,6 @@ jobs:
     environment:
       name: ${{ inputs.github_environment }}
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    env:
-      AZURE_WEBAPP_NAME:  ${{ secrets.IDSV_NAME }}
-      AZURE_WEBAPP_PROJECT_PATH: src/IdentityServer/src/UI
-      AZURE_WEBAPP_PACKAGE_PATH: src/IdentityServer/src/UI/publish
-      AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE_IDENTITYSERVER }}
-
     steps:
       - name: Download Publish Artifacts
         uses: actions/download-artifact@v3
@@ -51,7 +41,15 @@ jobs:
 
       - name: Download Efbundle Artifacts
         uses: actions/download-artifact@v3
-        if: ${{ inputs.efbundle_artifact_name != null }}
+        if: ${{ inputs.efbundle_artifact_name != "" }}
         with:
           name: inputs.efbundle_artifact_name
-          path: efbundle/linux-x64
+          path: efbundle
+
+      - name: Deploy to Azure WebApp
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          package: .
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}

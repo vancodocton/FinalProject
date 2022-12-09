@@ -1,29 +1,33 @@
-name: "CI"
+name: "Development: CD"
 
 on:
   push:
     branches:
       - "main"
-  pull_request:
-    types:
-      - opened
-      - ready_for_review
-      - synchronize
-      - reopened
-    branches:
-      - "main"
 
 jobs:
-  # dotnet_CI:
-  #   name: Run CI for .NET
-  #   uses: ./.github/workflows/dotnet.ci.yml
+  dotnet_CI:
+    name: Run CI for .NET
+    uses: ./.github/workflows/dotnet.ci.yml
 
   IdentityServer_CD:
     name: Run CD for Identity Server
     uses: ./.github/workflows/dotnet.cd.yml
+    needs: [dotnet_CI]
     with:
       github_environment: Development
       publish_artifact_name: IdentityServer
     secrets:
       AZURE_WEBAPP_NAME: ${{ secrets.IDSV_NAME }}
       AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE_IDENTITYSERVER }}
+
+  DemoApp_Api_CD:
+    name: Run CD for DemoApp Api
+    uses: ./.github/workflows/dotnet.cd.yml
+    needs: [dotnet_CI]
+    with:
+      github_environment: Development
+      publish_artifact_name: IdentityServer
+    secrets:
+      AZURE_WEBAPP_NAME: ${{ secrets.DEMOAPPAPI_NAME }}
+      AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE_DEMOAPP_API }}
