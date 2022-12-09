@@ -114,8 +114,8 @@ jobs:
       - name: Restore and Build
         run: |
           dotnet tool restore
-          dotnet restore "${{ matrix.packages.path }}"
-          dotnet build "${{ matrix.packages.path }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+          dotnet restore
+          dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
 
       - name: Publish
         run: |

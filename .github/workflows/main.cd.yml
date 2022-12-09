@@ -17,6 +17,7 @@ jobs:
     with:
       github_environment: Development
       publish_artifact_name: IdentityServer
+      efbundle_artifact_name: IdentityServer.efbundle.linux-x64
     secrets:
       AZURE_WEBAPP_NAME: ${{ secrets.IDSV_NAME }}
       AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE_IDENTITYSERVER }}
@@ -27,7 +28,7 @@ jobs:
     needs: [dotnet_CI]
     with:
       github_environment: Development
-      publish_artifact_name: IdentityServer
+      publish_artifact_name: DemoApp.Api
     secrets:
       AZURE_WEBAPP_NAME: ${{ secrets.DEMOAPPAPI_NAME }}
       AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE_DEMOAPP_API }}
