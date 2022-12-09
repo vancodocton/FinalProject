@@ -40,10 +40,10 @@ jobs:
           path: .
 
       - name: Download Efbundle Artifacts
+        if: ${{ inputs.efbundle_artifact_name != '' }}
         uses: actions/download-artifact@v3
-        if: ${{ inputs.efbundle_artifact_name != "" }}
         with:
-          name: inputs.efbundle_artifact_name
+          name: ${{ inputs.efbundle_artifact_name }}
           path: efbundle
 
       - name: Deploy to Azure WebApp
