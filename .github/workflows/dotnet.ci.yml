@@ -1,27 +1,16 @@
 name: "Dotnet CI"
 
 on:
-  push:
-    branches:
-      - "main"
-  pull_request:
-    types:
-      - opened
-      - ready_for_review
-      - synchronize
-      - reopened
-    branches:
-      - "main"
   workflow_dispatch:
+  workflow_call:
 
 env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  SOLUTION_FILE: FinalProject.sln
 
 jobs:
-  dotnet_CI:
-    name: .Net CI
+  build_test:
+    name: Build and test entire solution
     if: github.event_name != 'pull_request' || (github.event.pull_request.draft == false)
     runs-on: ubuntu-latest
     services:
@@ -37,7 +26,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-
     steps:
       - uses: actions/checkout@v3
 
@@ -69,7 +57,7 @@ jobs:
   code_coverage:
     name: Create Code Coverage Report
     runs-on: ubuntu-latest
-    needs: [dotnet_CI]
+    needs: [build_test]
     steps:
       - uses: actions/checkout@v3
 
@@ -107,10 +95,10 @@ jobs:
         with:
           files: coveragereport/Cobertura.xml
 
-  dotnet_publish_IdentityServer:
-    name: Generate and upload publish artifacts of .NET projects.
+  publish_IdentityServer:
+    name: Generate and upload publish artifacts of Identity Server
     runs-on: ubuntu-latest
-    needs: dotnet_CI
+    needs: build_test
     env:
       PACKAGE_NAME: IdentityServer
       PROJECT_PATH: src/IdentityServer/src/UI
@@ -154,10 +142,10 @@ jobs:
           name: ${{ env.PACKAGE_NAME }}.efbundle.linux-x64
           path: ${{ env.PROJECT_PATH }}/efbundle/linux-x64
 
-  dotnet_publish_DemoApp_Api:
-    name: Generate and upload publish artifacts of .NET projects.
+  publish_DemoApp_Api:
+    name: Generate and upload publish artifacts of DemoApp Api
     runs-on: ubuntu-latest
-    needs: dotnet_CI
+    needs: build_test
     env:
       PACKAGE_NAME: DemoApp.Api
       PROJECT_PATH: src/DemoApp/src/Api

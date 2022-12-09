@@ -1,0 +1,21 @@
+name: "CI"
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - synchronize
+      - reopened
+    branches:
+      - "main"
+
+
+jobs:
+  dotnet_CI:
+    name: Run CI for .NET
+    uses: ./.github/workflows/dotnet.ci.yml
+
