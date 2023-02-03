@@ -1,5 +1,7 @@
 using DuongTruong.IdentityServer.UI.Configurations;
+using DuongTruong.IdentityServer.UI.Services;
 using DuongTruong.IdentityServer.UI.Utils;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
@@ -11,6 +13,9 @@ var warmUpBehavior = builder.Configuration.GetValue("WarmUp", WarmUpBehavior.Ski
 builder.Services.AddSingleton(stopwatch);
 builder.Services.AddRazorPages();
 builder.Services.AddDefaultDependencies(builder.Configuration);
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 var app = builder.Build();
 
