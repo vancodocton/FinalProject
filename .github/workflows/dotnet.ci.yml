@@ -3,6 +3,9 @@ name: "Dotnet CI"
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        required: true
 
 env:
   CONFIGURATION: Release
@@ -33,6 +36,7 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+          global-json-file: global.json
 
       - name: Restore
         run: |
@@ -63,8 +67,6 @@ jobs:
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Download Test Results Artifacts
         uses: actions/download-artifact@v5
@@ -94,6 +96,8 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           files: coveragereport/Cobertura.xml
+          disable_search: true
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   publish_IdentityServer:
     name: Generate and upload publish artifacts of Identity Server
@@ -108,8 +112,6 @@ jobs:
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Restore and Build
         run: |
@@ -155,8 +157,6 @@ jobs:
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Restore and Build
         run: |

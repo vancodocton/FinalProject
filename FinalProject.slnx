@@ -1,0 +1,35 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/DemoApp/" />
+  <Folder Name="/src/DemoApp/src/">
+    <Project Path="src/DemoApp/src/Api/DemoApp.Api.csproj" />
+    <Project Path="src/DemoApp/src/Core/DemoApp.Core.csproj" />
+    <Project Path="src/DemoApp/src/Infrastructure.PostgreSql/DemoApp.Infrastructure.PostgreSql.csproj" />
+    <Project Path="src/DemoApp/src/Infrastructure/DemoApp.Infrastructure.csproj" />
+    <Project Path="src/DemoApp/src/Web/DemoApp.Web.csproj" />
+  </Folder>
+  <Folder Name="/src/DemoApp/tests/">
+    <Project Path="src/DemoApp/tests/IntegratedTest/DemoApp.IntegratedTest.csproj" />
+    <Project Path="src/DemoApp/tests/UnitTest/DemoApp.UnitTest.csproj" />
+  </Folder>
+  <Folder Name="/src/IdentityServer/" />
+  <Folder Name="/src/IdentityServer/src/">
+    <Project Path="src/IdentityServer/src/Core/IdentityServer.Core.csproj" />
+    <Project Path="src/IdentityServer/src/Infrastructure.PostgreSql/IdentityServer.Infrastructure.PostgreSql.csproj" />
+    <Project Path="src/IdentityServer/src/Infrastructure.SqlServer/IdentityServer.Infrastructure.SqlServer.csproj" />
+    <Project Path="src/IdentityServer/src/Infrastructure/IdentityServer.Infrastructure.csproj" />
+    <Project Path="src/IdentityServer/src/UI/IdentityServer.UI.csproj" />
+  </Folder>
+  <Folder Name="/src/IdentityServer/tests/">
+    <Project Path="src/IdentityServer/tests/IntegratedTest/IdentityServer.IntegratedTest.csproj" />
+    <Project Path="src/IdentityServer/tests/UnitTest/IdentityServer.UnitTest.csproj" />
+  </Folder>
+</Solution>
