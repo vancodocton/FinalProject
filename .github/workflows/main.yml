@@ -70,10 +70,10 @@ jobs:
       #    --health-retries 3
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
@@ -91,7 +91,7 @@ jobs:
         shell: pwsh
 
       - name: Upload Test Results Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ubuntu-latest.TestResults
           path: |
@@ -103,15 +103,15 @@ jobs:
     needs: [dotnet_CI]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Download Test Results Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: ubuntu-latest.TestResults
           path: .
@@ -129,13 +129,13 @@ jobs:
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
       - name: Upload Code Coverage Report Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CoverageReport
           path: coveragereport/
 
       - name: Upload TestResults to CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           files: coveragereport/Cobertura.xml
 
@@ -149,10 +149,10 @@ jobs:
       PROJECT_PATH: src/IdentityServer/src/UI
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
@@ -176,13 +176,13 @@ jobs:
           #dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ env.PROJECT_PATH }}" --output ""${{ env.PROJECT_PATH }}"/publish/efbundle.exe" -r win-x64
 
       - name: Upload Application Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.PROJECT_PATH }}/publish
 
       - name: Upload Efbundle Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGE_NAME }}.efbundle.linux-x64
           path: ${{ env.PROJECT_PATH }}/efbundle/linux-x64
@@ -203,20 +203,20 @@ jobs:
 
     steps:
       - name: Download Publish Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: IdentityServer
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Download Efbundle Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: IdentityServer.efbundle.linux-x64
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/efbundle/linux-x64
 
       - name: Deploy to Azure WebApp
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
