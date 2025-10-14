@@ -1,6 +1,6 @@
 {
   "solution": {
-    "path": "..\\..\\FinalProject.sln",
+    "path": "..\\..\\FinalProject.slnx",
     "projects": [
       "src\\DemoApp\\src\\Api\\DemoApp.Api.csproj",
       "src\\DemoApp\\src\\Core\\DemoApp.Core.csproj",

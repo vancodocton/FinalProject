@@ -1,6 +1,6 @@
 {
   "solution": {
-    "path": "..\\..\\FinalProject.sln",
+    "path": "..\\..\\FinalProject.slnx",
     "projects": [
       "src\\IdentityServer\\src\\Core\\IdentityServer.Core.csproj",
       "src\\IdentityServer\\src\\Infrastructure.PostgreSql\\IdentityServer.Infrastructure.PostgreSql.csproj",
