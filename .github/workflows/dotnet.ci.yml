@@ -27,10 +27,10 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
@@ -48,7 +48,7 @@ jobs:
         shell: pwsh
 
       - name: Upload Test Results Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ubuntu-latest.TestResults
           path: |
@@ -59,15 +59,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build_test]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Download Test Results Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: ubuntu-latest.TestResults
           path: .
@@ -85,13 +85,13 @@ jobs:
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
       - name: Upload Code Coverage Report Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CoverageReport
           path: coveragereport/
 
       - name: Upload TestResults to CodeCov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           files: coveragereport/Cobertura.xml
 
@@ -104,10 +104,10 @@ jobs:
       PROJECT_PATH: src/IdentityServer/src/UI
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
@@ -131,13 +131,13 @@ jobs:
           #dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ env.PROJECT_PATH }}" --output ""${{ env.PROJECT_PATH }}"/publish/efbundle.exe" -r win-x64
 
       - name: Upload Application Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.PROJECT_PATH }}/publish
 
       - name: Upload Efbundle Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGE_NAME }}.efbundle.linux-x64
           path: ${{ env.PROJECT_PATH }}/efbundle/linux-x64
@@ -151,10 +151,10 @@ jobs:
       PROJECT_PATH: src/DemoApp/src/Api
       PROJECT_PUBLISH_PATH: src/DemoApp/src/Api/publish
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
@@ -169,7 +169,7 @@ jobs:
           dotnet publish "${{ env.PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.PROJECT_PUBLISH_PATH }}"
 
       - name: Upload Application Publish Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.PROJECT_PUBLISH_PATH }}

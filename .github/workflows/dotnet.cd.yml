@@ -34,21 +34,21 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
       - name: Download Publish Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.publish_artifact_name }}
           path: .
 
       - name: Download Efbundle Artifacts
         if: ${{ inputs.efbundle_artifact_name != '' }}
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: ${{ inputs.efbundle_artifact_name }}
           path: efbundle
 
       - name: Deploy to Azure WebApp
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           package: .
