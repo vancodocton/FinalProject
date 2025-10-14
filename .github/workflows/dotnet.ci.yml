@@ -64,8 +64,6 @@ jobs:
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Download Test Results Artifacts
         uses: actions/download-artifact@v5
@@ -109,8 +107,6 @@ jobs:
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Restore and Build
         run: |
@@ -156,8 +152,6 @@ jobs:
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
 
       - name: Restore and Build
         run: |
