@@ -9,9 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.7" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.7" />
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.3.2" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.3.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.0-rc.2.25502.107" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0-rc.2.25502.107" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0-rc.2.25502.107">
