@@ -130,10 +130,10 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p "${{ env.PROJECT_PATH }}/efbundle/linux-x64"
-          dotnet ef migrations bundle --verbose --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ApplicationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-AppDb" -r linux-x64
-          dotnet ef migrations bundle --verbose --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ConfigurationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-ConfigDb" -r linux-x64
-          dotnet ef migrations bundle --verbose --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context PersistedGrantDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-OperaDb" -r linux-x64
-          #dotnet ef migrations bundle  --verbose --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ env.PROJECT_PATH }}" --output ""${{ env.PROJECT_PATH }}"/publish/efbundle.exe" -r win-x64
+          dotnet ef migrations bundle --verbose --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ApplicationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-AppDb" -r linux-x64 --self-contained
+          dotnet ef migrations bundle --verbose --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context ConfigurationDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-ConfigDb" -r linux-x64 --self-contained
+          dotnet ef migrations bundle --verbose --configuration ${{ env.CONFIGURATION }} --no-build --project "${{ env.PROJECT_PATH }}" --context PersistedGrantDbContext --output "${{ env.PROJECT_PATH }}/efbundle/linux-x64/efbundle-OperaDb" -r linux-x64 --self-contained
+          #dotnet ef migrations bundle  --verbose --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ env.PROJECT_PATH }}" --output ""${{ env.PROJECT_PATH }}"/publish/efbundle.exe" -r win-x64 --self-contained
 
       - name: Upload Application Publish Artifacts
         uses: actions/upload-artifact@v4
