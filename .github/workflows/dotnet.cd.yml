@@ -1,7 +1,6 @@
 name: "Dotnet CD"
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       github_environment:
@@ -21,8 +20,14 @@ on:
       AZURE_WEBAPP_NAME:
         description: The name of Azure Web App
         required: true
-      AZURE_WEBAPP_PUBLISH_PROFILE:
-        description: The XML publish profile of Azure Web App
+      AZUREAPPSERVICE_CLIENTID:
+        description: The client ID for Azure App Service
+        required: true
+      AZUREAPPSERVICE_TENANTID:
+        description: The tenant ID for Azure App Service
+        required: true
+      AZUREAPPSERVICE_SUBSCRIPTIONID:
+        description: The subscription ID for Azure App Service
         required: true
 
 jobs:
