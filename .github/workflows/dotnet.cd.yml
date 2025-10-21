@@ -1,7 +1,6 @@
 name: "Dotnet CD"
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       github_environment:
@@ -21,8 +20,14 @@ on:
       AZURE_WEBAPP_NAME:
         description: The name of Azure Web App
         required: true
-      AZURE_WEBAPP_PUBLISH_PROFILE:
-        description: The XML publish profile of Azure Web App
+      AZUREAPPSERVICE_CLIENTID:
+        description: The client ID for Azure App Service
+        required: true
+      AZUREAPPSERVICE_TENANTID:
+        description: The tenant ID for Azure App Service
+        required: true
+      AZUREAPPSERVICE_SUBSCRIPTIONID:
+        description: The subscription ID for Azure App Service
         required: true
 
 jobs:
@@ -46,10 +51,16 @@ jobs:
           name: ${{ inputs.efbundle_artifact_name }}
           path: efbundle
 
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+
       - name: Deploy to Azure WebApp
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           package: .
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
