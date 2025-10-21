@@ -7,6 +7,7 @@
     <RootNamespace>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <AssemblyName>DuongTruong.$(MSBuildProjectName.Replace(" ", "_"))</AssemblyName>
     <ResolveStaticWebAssetsInputsDependsOn>RemoveIdentityAssets</ResolveStaticWebAssetsInputsDependsOn>
+    <UserSecretsId>e9f4c379-1a89-4726-bce4-0d1a877eba49</UserSecretsId>
   </PropertyGroup>
 
   <Target Name="RemoveIdentityAssets">
