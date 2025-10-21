@@ -27,7 +27,7 @@ builder.Services.AddAuthentication(options =>
 
         // implicit add openid profile scope // skip adding
         options.Scope.Add("roles");
-        options.Scope.Add("urn:demoapi.read");
+        options.Scope.Add("urn:demoapi:read");
         options.Scope.Add(OpenIdConnectScope.OfflineAccess);
 
         options.ClaimActions.MapJsonKey(ClaimTypes.Role, "role");
