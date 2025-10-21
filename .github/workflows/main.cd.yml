@@ -16,6 +16,9 @@ jobs:
     name: Run CD for Identity Server
     uses: ./.github/workflows/dotnet.cd.yml
     needs: [dotnet_CI]
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
     with:
       github_environment: Development.IdentityServer
       publish_artifact_name: IdentityServer
@@ -26,6 +29,9 @@ jobs:
     name: Run CD for DemoApp Api
     uses: ./.github/workflows/dotnet.cd.yml
     needs: [dotnet_CI]
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
     with:
       github_environment: Development.DemoApp
       publish_artifact_name: DemoApp.Api
