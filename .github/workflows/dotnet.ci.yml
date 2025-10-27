@@ -52,7 +52,7 @@ jobs:
         shell: pwsh
 
       - name: Upload Test Results Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ubuntu-latest.TestResults
           path: |
@@ -69,7 +69,7 @@ jobs:
         uses: actions/setup-dotnet@v5
 
       - name: Download Test Results Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: ubuntu-latest.TestResults
           path: .
@@ -87,7 +87,7 @@ jobs:
           toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
 
       - name: Upload Code Coverage Report Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: CoverageReport
           path: coveragereport/
@@ -133,13 +133,13 @@ jobs:
           #dotnet ef migrations bundle --configuration ${{ env.CONFIGURATION }} --no-build --context ApplicationDbContext --project "${{ env.PROJECT_PATH }}" --output ""${{ env.PROJECT_PATH }}"/publish/efbundle.exe" -r win-x64
 
       - name: Upload Application Publish Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.PROJECT_PATH }}/publish
 
       - name: Upload Efbundle Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PACKAGE_NAME }}.efbundle.linux-x64
           path: ${{ env.PROJECT_PATH }}/efbundle/linux-x64
@@ -169,7 +169,7 @@ jobs:
           dotnet publish "${{ env.PROJECT_PATH }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.PROJECT_PUBLISH_PATH }}"
 
       - name: Upload Application Publish Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.PROJECT_PUBLISH_PATH }}

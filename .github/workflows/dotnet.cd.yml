@@ -34,14 +34,14 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
       - name: Download Publish Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: ${{ inputs.publish_artifact_name }}
           path: .
 
       - name: Download Efbundle Artifacts
         if: ${{ inputs.efbundle_artifact_name != '' }}
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: ${{ inputs.efbundle_artifact_name }}
           path: efbundle
